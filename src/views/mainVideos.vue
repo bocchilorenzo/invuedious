@@ -1,28 +1,28 @@
 <template>
-  <div class="container2">
-    <div v-if="loading" class="loading loading-lg"></div>
-    <div v-else>
-      <div class="columns">
-        <div
-          v-for="video in videoArray"
-          :key="video.videoId"
-          class="column col-xs-12 col-sm-6 col-md-3 col-2"
-        >
-          <div class="card">
-            <div class="card-image">
-              <img :src="video.videoThumbnails[4].url" class="img-responsive" />
-            </div>
-            <div class="card-header">
-              <div class="card-title h6">{{ video.title }}</div>
-              <div class="card-subtitle text-gray">{{ video.author }}</div>
-            </div>
-            <div class="card-body">
-              Published: {{video.publishedText}}
-              <br />
-              Views: {{ video.formattedViews }}
-            </div>
-          </div>
-        </div>
+  <div>
+    <ul class="tab tab-block">
+      <li class="tab-item" id="tab1">
+        <router-link :to="{
+                    name: 'popular',
+                }">POPULAR</router-link>
+      </li>
+      <!--
+      <li class="tab-item" id="tab2">
+        <router-link :to="{
+                    name: 'top',
+                }">TOP</router-link>
+      </li>
+      -->
+      <li class="tab-item" id="tab3">
+        <router-link :to="{
+                    name: 'trending',
+                }">TRENDING</router-link>
+      </li>
+    </ul>
+    <div class="container2">
+      <div v-if="loading" class="loading loading-lg"></div>
+      <div v-else>
+        <cardContainer :videoArray="videoArray" />
       </div>
     </div>
   </div>
@@ -30,14 +30,21 @@
 
 <script>
 var numeral = require("numeral");
+import cardContainer from "../components/cardContainer";
 import axios from "axios";
 export default {
   name: "mainPage",
+  components: {
+    cardContainer
+  },
   data() {
     return {
       videoArray: [],
       loading: true
     };
+  },
+  mounted(){
+    this.checkActive()
   },
   created() {
     this.getVideoData();
@@ -45,17 +52,16 @@ export default {
   },
   methods: {
     getVideoData() {
-      var url = ""
-      if(this.$route.name == "popular"){
-        url = "https://invidio.us/api/v1/popular"
-      }
-      /*
+      var url = "";
+      if (this.$route.name == "popular") {
+        url = "https://invidio.us/api/v1/popular";
+      } else {
+        /*
       else if(this.$route.name == "top"){
         url = "https://invidio.us/api/v1/top"
       }
       */
-      else{
-        url = "https://invidio.us/api/v1/trending"
+        url = "https://invidio.us/api/v1/trending";
       }
       axios({
         url: url
@@ -73,43 +79,22 @@ export default {
         })
         .catch(error => console.log(error))
         .then(() => (this.loading = false));
+    },
+    checkActive() {
+      if (this.$route.name == "popular") {
+        document.getElementById("tab1").classList.add("active");
+        //document.getElementById("tab2").classList.remove("active");
+        document.getElementById("tab3").classList.remove("active");
+      } /*else if (this.$route.name == "top") {
+        document.getElementById("tab2").classList.add("active");
+        document.getElementById("tab1").classList.remove("active");
+        document.getElementById("tab3").classList.remove("active");
+      }*/ else {
+        document.getElementById("tab3").classList.add("active");
+        //document.getElementById("tab2").classList.remove("active");
+        document.getElementById("tab1").classList.remove("active");
+      }
     }
   }
 };
 </script>
-
-<style scoped>
-.card-title {
-  overflow: hidden;
-  white-space: nowrap; /* Don't forget this one */
-  text-overflow: ellipsis;
-}
-.card {
-  background-color: black;
-  border: none;
-}
-.card .h6 {
-  color: var(--primary);
-}
-.card-body {
-  color: darkgray;
-}
-@media screen and (max-width: 480px) {
-  .card {
-    max-width: 320px;
-    margin: 0 auto;
-  }
-}
-.container2 {
-  padding: 1em 0.8em 0;
-}
-@media screen and (min-width: 1000px) {
-  .container2 {
-    width: 90%;
-    margin: 0 auto;
-  }
-}
-.column {
-  margin-bottom: 1em;
-}
-</style>

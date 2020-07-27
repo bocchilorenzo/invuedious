@@ -11,60 +11,18 @@
       <div class="columns">
         <div class="column col-10 col-mx-auto">
           <div class="searchContainer">
-            <input class="search" type="text" placeholder="Search..." >
+            <input class="search" type="text" placeholder="Search..." />
           </div>
         </div>
       </div>
     </div>
-    <ul class="tab tab-block">
-      <li class="tab-item" id="tab1">
-        <router-link :to="{
-                    name: 'popular',
-                }">POPULAR</router-link>
-      </li>
-      <!--
-      <li class="tab-item" id="tab2">
-        <router-link :to="{
-                    name: 'top',
-                }">TOP</router-link>
-      </li>
-      -->
-      <li class="tab-item" id="tab3">
-        <router-link :to="{
-                    name: 'trending',
-                }">TRENDING</router-link>
-      </li>
-    </ul>
-    <router-view @checkActive="checkActive" :key="this.$route.name" />
+    <router-view :key="this.$route.path" />
   </div>
 </template>
 
 <script>
 export default {
-  mounted() {
-    this.checkActive();
-  },
   methods: {
-    changeRoute(dest) {
-      if (this.$route.name != dest) {
-        this.$router.push({ name: dest });
-      }
-    },
-    checkActive() {
-      if (this.$route.name == "popular") {
-        document.getElementById("tab1").classList.add("active");
-        //document.getElementById("tab2").classList.remove("active");
-        document.getElementById("tab3").classList.remove("active");
-      } /*else if (this.$route.name == "top") {
-        document.getElementById("tab2").classList.add("active");
-        document.getElementById("tab1").classList.remove("active");
-        document.getElementById("tab3").classList.remove("active");
-      }*/ else {
-        document.getElementById("tab3").classList.add("active");
-        //document.getElementById("tab2").classList.remove("active");
-        document.getElementById("tab1").classList.remove("active");
-      }
-    }
   }
 };
 </script>
@@ -79,7 +37,7 @@ export default {
   height: 56px;
   padding: 0 0.5rem;
 }
-.searchContainer{
+.searchContainer {
   text-align: center;
 }
 .search {
@@ -87,16 +45,16 @@ export default {
   margin: 0 auto;
   height: 40px;
   background-color: var(--bg-dark);
-  border: .1rem solid var(--secondary);
+  border: 0.1rem solid var(--secondary);
   color: white;
   border-radius: 0.5em;
   padding: 0 1em;
 }
-.search:hover{
-  border: .1rem solid var(--primary);
+.search:hover {
+  border: 0.1rem solid var(--primary);
 }
-.search:focus{
-  border: .1rem solid var(--primary);
+.search:focus {
+  border: 0.1rem solid var(--primary);
 }
 @media screen and (min-width: 960px) {
   .search {
@@ -118,5 +76,39 @@ a {
 }
 .tab {
   border: none !important;
+}
+.container2 {
+  padding: 1em 0.8em 0;
+}
+@media screen and (min-width: 1000px) {
+  .container2 {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+.card-title {
+  overflow: hidden;
+  white-space: nowrap; /* Don't forget this one */
+  text-overflow: ellipsis;
+}
+.card {
+  background-color: black !important;
+  border: none !important;
+  margin-bottom: 1em !important;
+}
+.card .h6 {
+  color: var(--primary);
+}
+.card-body {
+  color: darkgray;
+}
+@media screen and (max-width: 480px) {
+  .card {
+    max-width: 320px !important;
+    margin: 0 auto !important;
+  }
+}
+a:hover {
+  text-decoration: none !important;
 }
 </style>
