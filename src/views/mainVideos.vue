@@ -4,7 +4,7 @@
       <li class="tab-item" id="tab1">
         <router-link :to="{
                     name: 'popular',
-                }">POPULAR</router-link>
+                }"><unicon name="fire" fill="var(--primary)" />POPULAR</router-link>
       </li>
       <!--
       <li class="tab-item" id="tab2">
@@ -16,7 +16,7 @@
       <li class="tab-item" id="tab3">
         <router-link :to="{
                     name: 'trending',
-                }">TRENDING</router-link>
+                }"><unicon name="chart-line" fill="var(--primary)" />TRENDING</router-link>
       </li>
     </ul>
     <div class="container2">
@@ -48,7 +48,6 @@ export default {
   },
   created() {
     this.getVideoData();
-    this.$emit("checkActive");
   },
   methods: {
     getVideoData() {
@@ -75,7 +74,6 @@ export default {
             );
             this.videoArray.push(tmpObj);
           }
-          console.log(this.videoArray);
         })
         .catch(error => console.log(error))
         .then(() => (this.loading = false));
@@ -98,3 +96,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .tab{
+    margin: 0 auto;
+  }
+  @media screen and (min-width: 768px) {
+    .tab{
+      width: 50%!important;
+    }
+  }
+</style>

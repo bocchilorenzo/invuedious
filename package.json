@@ -12,8 +12,11 @@
     "core-js": "^3.6.5",
     "numeral": "^2.0.6",
     "spectre.css": "^0.5.9",
+    "string-strip-html": "^4.5.0",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0"
+    "vue-plyr": "^6.0.4",
+    "vue-router": "^3.2.0",
+    "vue-unicons": "^2.3.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",

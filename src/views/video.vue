@@ -2,70 +2,38 @@
   <div class="container2">
     <div v-if="loading" class="loading loading-lg"></div>
     <div class="columns" v-else>
-      <div class="column col-xs-12 col-10">
-        <div class="textCenter">
-          <video
-            controls
-            preload="auto"
-            :poster="videoInfo[0].videoThumbnails[1].url"
-          >
-            <source
-              :src="videoInfo[0].formatStreams[1].url"
-              :type="videoInfo[0].formatStreams[1].type"
-            />
-          </video>
-        </div>
-        <h3>{{videoInfo[0].title}}</h3>
+      <div class="column col-lg-12 col-10">
+        <videoplayer :videoInfo="videoInfo"/>
+        <videoinfo :videoInfo="videoInfo" />
         <div>
-          <!--IMMAGINE e NOME AUTORE-->
-        </div>
-        <div>
-          <!--DESCRIZIONE DROPDOWN-->
-        </div>
-        <div>
-          <!--COMMENTI-->
-        </div>
-      </div>
-      <div class="column col-xs-12 col-2">
-        <h5>Recommended videos</h5>
-        <div class="card" v-for="video in videoInfo[0].recommendedVideos" :key="video.videoId">
-          <router-link
-            :to="{
-                    name: 'video',
-                    path: '/video/:id',
-                    params: { id: video.videoId },
-                    props: true,
-                }"
-          >
-            <div class="card-image">
-              <img :src="video.videoThumbnails[4].url" class="img-responsive" />
-            </div>
-          </router-link>
-          <div class="card-header">
-            <router-link
-              :to="{
-                    name: 'video',
-                    path: '/video/:id',
-                    params: { id: video.videoId },
-                    props: true,
-                }"
-            >
-              <div class="card-title h6">{{ video.title }}</div>
-            </router-link>
-            <div class="card-subtitle text-gray">{{ video.author }}</div>
+          <div class="commentCard">
+            <!--COMMENTS-->
           </div>
         </div>
+      </div>
+      <div class="column col-lg-12 col-2">
+        <recommended :videoInfo="videoInfo" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+var numeral = require("numeral");
 import axios from "axios";
+import videoplayer from '../components/videoplayer'
+import videoinfo from '../components/videoinfo'
+import recommended from '../components/recommended'
+
 export default {
   name: "videoPage",
   created() {
     this.getVideo();
+  },
+  components:{
+    videoplayer,
+    videoinfo,
+    recommended
   },
   data() {
     return {
@@ -74,6 +42,11 @@ export default {
       videoInfo: []
     };
   },
+  computed: {
+    player() {
+      return this.$refs.plyr.player;
+    }
+  },
   methods: {
     getVideo() {
       axios({
@@ -81,6 +54,19 @@ export default {
       })
         .then(response => {
           this.videoInfo.push(response.data);
+          for (var i = 0; i < this.videoInfo[0].formatStreams.length; i++) {
+            this.videoInfo[0].formatStreams[
+              i
+            ].qualityLabel = this.videoInfo[0].formatStreams[
+              i
+            ].qualityLabel.substring(
+              0,
+              this.videoInfo[0].formatStreams[i].qualityLabel.length - 1
+            );
+          }
+          this.videoInfo[0].formattedViews = numeral(
+            response.data.viewCount
+          ).format("0a");
         })
         .catch(error => console.log(error))
         .then(() => (this.loading = false));
@@ -90,13 +76,4 @@ export default {
 </script>
 
 <style scoped>
-.textCenter {
-  text-align: center;
-}
-h3 {
-  color: white;
-}
-h5 {
-  color: darkgray;
-}
 </style>
