@@ -21,10 +21,12 @@
     </div>
     <div class="divider"></div>
     <div>
-      <figure class="avatar avatar-xl" data-initial="YZ" style="background-color: #6f2232;">
-        <img :src="videoInfo[0].authorThumbnails[1].url" name="Channel image" />
-      </figure>
-      <span id="authorName" style="padding-left: 0.5em">{{videoInfo[0].author}}</span>
+      <div class="authorInfo">
+        <figure class="avatar avatar-xl" :data-initial="videoInfo[0].author.charAt(0)" style="background-color: #6f2232;">
+          <img :src="videoInfo[0].authorThumbnails[1].url" name="Channel image" />
+        </figure>
+        <span id="authorName" style="padding-left: 0.5em">{{videoInfo[0].author}}</span>
+      </div>
       <div class="accordion">
         <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden />
         <label class="accordion-header" for="accordion-1">
@@ -39,10 +41,10 @@
 
 <script>
 export default {
-    name: 'videoinfo',
-    props:{
-        videoInfo: Array
-    }
+  name: "videoinfo",
+  props: {
+    videoInfo: Array
+  }
 };
 </script>
 
@@ -63,7 +65,7 @@ export default {
   display: flex !important;
   align-items: center;
   border-radius: 0.5em;
-  margin-top: 0.5em;
+  padding: 0!important;
 }
 .accordion-header p {
   line-height: 24px;
@@ -72,6 +74,9 @@ export default {
 #authorName,
 .accordion-header p:hover {
   color: var(--primary);
+}
+.accordion-body{
+  padding-top: 1em;
 }
 p,
 span {
@@ -85,5 +90,8 @@ p {
   flex-wrap: wrap;
   justify-content: space-between;
   align-content: flex-start;
+}
+.authorInfo{
+  margin: 1em 0 0.5em;
 }
 </style>

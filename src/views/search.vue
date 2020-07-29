@@ -3,6 +3,7 @@
     <div v-if="loading" class="loading loading-lg"></div>
     <div v-else>
       <cardContainer :videoArray="videoArray" />
+      <div class="loading loading-lg"></div>
     </div>
   </div>
 </template>
@@ -27,6 +28,11 @@ export default {
   created() {
     this.getVideoData();
     window.addEventListener("scroll", () => {
+      this.bottom = this.bottomVisible();
+    });
+  },
+  destroyed() {
+    window.removeEventListener("scroll", () => {
       this.bottom = this.bottomVisible();
     });
   },
@@ -89,5 +95,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

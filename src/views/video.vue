@@ -3,16 +3,15 @@
     <div v-if="loading" class="loading loading-lg"></div>
     <div class="columns" v-else>
       <div class="column col-lg-12 col-10">
-        <videoplayer :videoInfo="videoInfo"/>
+        <videoplayer :videoInfo="videoInfo" />
         <videoinfo :videoInfo="videoInfo" />
-        <div>
-          <div class="commentCard">
-            <!--COMMENTS-->
-          </div>
-        </div>
+        <comments :videoId="videoId" v-if="myWidth > 960" />
       </div>
       <div class="column col-lg-12 col-2">
         <recommended :videoInfo="videoInfo" />
+      </div>
+      <div class="column col-12">
+        <comments :videoId="videoId" v-if="myWidth <= 960" />
       </div>
     </div>
   </div>
@@ -21,33 +20,38 @@
 <script>
 var numeral = require("numeral");
 import axios from "axios";
-import videoplayer from '../components/videoplayer'
-import videoinfo from '../components/videoinfo'
-import recommended from '../components/recommended'
+import videoplayer from "../components/videoplayer";
+import videoinfo from "../components/videoinfo";
+import recommended from "../components/recommended";
+import comments from "../components/comments";
 
 export default {
   name: "videoPage",
   created() {
     this.getVideo();
+    this.displayWindowSize();
+    window.onresize = this.displayWindowSize;
   },
-  components:{
+  components: {
     videoplayer,
     videoinfo,
-    recommended
+    recommended,
+    comments
   },
   data() {
     return {
       videoId: this.$route.params.id,
       loading: true,
+      myWidth: 0,
+      myHeight: 0,
       videoInfo: []
     };
   },
-  computed: {
-    player() {
-      return this.$refs.plyr.player;
-    }
-  },
   methods: {
+    displayWindowSize() {
+      this.myWidth = window.innerWidth;
+      this.myHeight = window.innerHeight;
+    },
     getVideo() {
       axios({
         url: "https://invidio.us/api/v1/videos/" + this.videoId
@@ -76,4 +80,10 @@ export default {
 </script>
 
 <style scoped>
+#resizer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+}
 </style>
