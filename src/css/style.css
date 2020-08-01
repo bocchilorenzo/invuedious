@@ -10,7 +10,7 @@ body::-webkit-scrollbar {
 }
 
 body {
-  background-color: var(--bg-dark) !important;
+  background-color: black !important;
   font-family     : "Roboto", sans-serif !important;
   scrollbar-width : thin;
   scrollbar-color : var(--bg-dark) var(--primary);
@@ -29,7 +29,7 @@ body::-webkit-scrollbar-thumb {
 :root {
   --primary  : #c3073f;
   --secondary: #da5973;
-  --bg-dark  : #1a1a1d;
+  --bg-dark  : #131313;
 }
 
 .navbar {
@@ -102,7 +102,8 @@ a {
   }
 }
 
-.card-title {
+.card-title,
+.card-subtitle {
   overflow     : hidden;
   white-space  : nowrap;
   /* Don't forget this one */
@@ -110,7 +111,7 @@ a {
 }
 
 .card {
-  background-color: black !important;
+  background-color: var(--bg-dark) !important;
   border          : none !important;
   margin-bottom   : 1em;
 }
@@ -126,7 +127,7 @@ a {
 @media screen and (max-width: 480px) {
   .card {
     max-width: 320px !important;
-    margin   : 0 auto !important;
+    margin   : 0 auto 1em !important;
   }
 }
 
@@ -160,9 +161,51 @@ a:hover {
 }
 
 .btn:hover {
-  background-color: var(--secondary)!important;
+  background-color: var(--secondary) !important;
 }
 
 .btn:active {
   background-color: var(--primary) !important;
+}
+
+.about-description {
+  color: white;
+}
+
+.about-description pre {
+  font-family: "Roboto", sans-serif;
+  white-space: pre-wrap !important;
+  /* css-3 */
+  white-space: -moz-pre-wrap !important;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap !important;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap !important;
+  /* Opera 7 */
+  word-wrap  : break-word !important;
+  /* Internet Explorer 5.5+ */
+}
+
+.about-description pre a {
+  color          : var(--primary);
+  text-decoration: none;
+}
+
+.about-description pre a:hover {
+  color: var(--secondary);
+}
+
+#channelDescription {
+  padding: 0 1em;
+}
+
+/*
+.tab {
+  margin: 0 auto;
+}
+*/
+@media screen and (min-width: 768px) {
+  .tab {
+    width: 50% !important;
+  }
 }

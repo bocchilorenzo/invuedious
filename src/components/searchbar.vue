@@ -29,7 +29,7 @@ export default {
       if (this.inputSearch != "" && this.inputSearch.length > 1) {
         query = stripHtml(this.inputSearch);
         this.$router.push({
-          name: "search",
+          name: "searchVideo",
           params: { q: query }
         });
       } else {

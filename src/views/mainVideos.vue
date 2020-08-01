@@ -49,7 +49,7 @@
 
 <script>
 var numeral = require("numeral");
-import cardContainer from "../components/cardContainer";
+import cardContainer from "../components/cardContainer.vue";
 import axios from "axios";
 export default {
   name: "mainPage",
@@ -141,12 +141,4 @@ export default {
 </script>
 
 <style scoped>
-.tab {
-  margin: 0 auto;
-}
-@media screen and (min-width: 768px) {
-  .tab {
-    width: 50% !important;
-  }
-}
 </style>

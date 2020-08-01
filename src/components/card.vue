@@ -45,4 +45,12 @@ export default {
 </script>
 
 <style scoped>
+/*
+.card{
+  border-radius: 0 1em 0 1em;
+}
+.card-image img{
+  border-radius: 0 1em 0 0!important;
+}
+*/
 </style>

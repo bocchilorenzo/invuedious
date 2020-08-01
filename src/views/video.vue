@@ -37,10 +37,10 @@
 <script>
 var numeral = require("numeral");
 import axios from "axios";
-import videoplayer from "../components/videoplayer";
-import videoinfo from "../components/videoinfo";
-import recommended from "../components/recommended";
-import comments from "../components/comments";
+import videoplayer from "../components/videoplayer.vue";
+import videoinfo from "../components/videoinfo.vue";
+import recommended from "../components/recommended.vue";
+import comments from "../components/comments.vue";
 
 export default {
   name: "videoPage",

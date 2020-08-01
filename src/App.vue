@@ -2,9 +2,14 @@
   <div>
     <header class="navbar">
       <section class="navbar-section">
-        <a href="#" class="navbar-brand mr-2">
+        <router-link
+          :to="{
+                    name: 'popular',
+                }"
+          class="navbar-brand mr-2"
+        >
           <unicon name="youtube" fill="black" id="barLogo" />INVIDIOUS
-        </a>
+        </router-link>
       </section>
     </header>
     <div class="container">
@@ -15,7 +20,7 @@
 </template>
 
 <script>
-import searchbar from "./components/searchbar";
+import searchbar from "./components/searchbar.vue";
 export default {
   methods: {},
   components: {

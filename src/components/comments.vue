@@ -158,5 +158,6 @@ p {
 }
 .commentCard .card {
   margin-bottom: 0;
+  background-color: var(--bg-dark)!important;
 }
 </style>

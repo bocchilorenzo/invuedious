@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import mainPage from '../views/mainVideos.vue'
 import searchPage from '../views/search.vue'
 import videoPage from '../views/video.vue'
+import channelPage from '../views/channel.vue'
 
 Vue.use(VueRouter)
 
@@ -32,9 +33,19 @@ const routes = [
     component: videoPage
   },
   {
-    path: '/search/:q',
-    name: 'search',
+    path: '/search/videos/:q',
+    name: 'searchVideo',
     component: searchPage
+  },
+  {
+    path: '/search/channels/:q',
+    name: 'searchChannel',
+    component: searchPage
+  },
+  {
+    path: '/channel/:id',
+    name: 'channel',
+    component: channelPage
   }
 ]
 

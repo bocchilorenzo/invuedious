@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import card from './card'
+import card from './card.vue'
 export default {
   name: "cardContainer",
   props: {

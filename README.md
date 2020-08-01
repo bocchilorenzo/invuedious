@@ -2,14 +2,9 @@
  A frontend for invidious that uses the invidious apis.
 
 ## In progress
-- Channel view
-- Empty states
+- Sort videos
+- Sort comments
 - Display replies to comments
 
-## Not guaranteed
-- Google login
-- Local login
-- Theme switch
-
 ## Known issues
-- Sometimes the invidious api doesn't work correctly and the requests fail
+- Sometimes the invidious api doesn't work correctly and the requests fail (there's a retry button in case it happens)
