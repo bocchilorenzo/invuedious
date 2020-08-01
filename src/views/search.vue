@@ -2,8 +2,25 @@
   <div class="container2">
     <div v-if="loading" class="loading loading-lg"></div>
     <div v-else>
-      <cardContainer :videoArray="videoArray" />
-      <div class="loading loading-lg"></div>
+      <div v-if="failed">
+        <div class="empty">
+          <div class="empty-icon">
+            <unicon name="sad-dizzy" fill="var(--primary)" width="50px" height="50px" />
+          </div>
+          <p class="empty-title h5">Connection error</p>
+          <p class="empty-subtitle">
+            The request to indvidio.us servers took too long.
+            <br />Check your connection and try again.
+          </p>
+          <div class="empty-action">
+            <button class="btn btn-primary" @click="reconnect()">RETRY</button>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <cardContainer :videoArray="videoArray" />
+        <div class="loading loading-lg"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -22,7 +39,8 @@ export default {
       videoArray: [],
       loading: true,
       page: 1,
-      bottom: false
+      bottom: false,
+      failed: false
     };
   },
   created() {
@@ -37,6 +55,11 @@ export default {
     });
   },
   methods: {
+    reconnect() {
+      this.loading = true;
+      this.failed = false;
+      this.getVideoData();
+    },
     bottomVisible() {
       const scrollY = window.scrollY;
       const visible = document.documentElement.clientHeight;
@@ -51,7 +74,8 @@ export default {
         "&page=" +
         this.page;
       axios({
-        url: url
+        url: url,
+        timeout: 10000
       })
         .then(response => {
           var tmpObj = {};
@@ -67,7 +91,12 @@ export default {
             }
           }
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+          if (error.code == "ECONNABORTED") {
+            this.failed = true;
+          }
+          console.log(error.code);
+        })
         .then(() => (this.page += 1))
         .then(() => (this.loading = false));
     },

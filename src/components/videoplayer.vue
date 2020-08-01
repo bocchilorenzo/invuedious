@@ -55,21 +55,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.empty {
-  background-color: rgb(70, 70, 70);
-  border-radius: 10px;
-}
-.empty-title {
-  color: white;
-}
-.btn {
-  background-color: var(--primary);
-  border: none;
-  color: black;
-}
-.btn:active {
-  background-color: var(--primary);
-}
-</style>

@@ -4,7 +4,9 @@
       <li class="tab-item" id="tab1">
         <router-link :to="{
                     name: 'popular',
-                }"><unicon name="fire" fill="var(--primary)" />POPULAR</router-link>
+                }">
+          <unicon name="fire" fill="var(--primary)" />POPULAR
+        </router-link>
       </li>
       <!--
       <li class="tab-item" id="tab2">
@@ -16,13 +18,30 @@
       <li class="tab-item" id="tab3">
         <router-link :to="{
                     name: 'trending',
-                }"><unicon name="chart-line" fill="var(--primary)" />TRENDING</router-link>
+                }">
+          <unicon name="chart-line" fill="var(--primary)" />TRENDING
+        </router-link>
       </li>
     </ul>
     <div class="container2">
       <div v-if="loading" class="loading loading-lg"></div>
       <div v-else>
-        <cardContainer :videoArray="videoArray" />
+        <div v-if="failed">
+          <div class="empty">
+            <div class="empty-icon">
+              <unicon name="sad-dizzy" fill="var(--primary)" width="50px" height="50px" />
+            </div>
+            <p class="empty-title h5">Connection error</p>
+            <p class="empty-subtitle">
+              The request to indvidio.us servers took too long.
+              <br />Check your connection and try again.
+            </p>
+            <div class="empty-action">
+              <button class="btn btn-primary" @click="reconnect()">RETRY</button>
+            </div>
+          </div>
+        </div>
+        <cardContainer v-else :videoArray="videoArray" />
       </div>
     </div>
   </div>
@@ -40,16 +59,22 @@ export default {
   data() {
     return {
       videoArray: [],
-      loading: true
+      loading: true,
+      failed: false
     };
   },
-  mounted(){
-    this.checkActive()
+  mounted() {
+    this.checkActive();
   },
   created() {
     this.getVideoData();
   },
   methods: {
+    reconnect() {
+      this.loading = true;
+      this.failed = false;
+      this.getVideoData();
+    },
     getVideoData() {
       var url = "";
       if (this.$route.name == "popular") {
@@ -63,7 +88,8 @@ export default {
         url = "https://invidio.us/api/v1/trending";
       }
       axios({
-        url: url
+        url: url,
+        timeout: 1000
       })
         .then(response => {
           var tmpObj = {};
@@ -72,10 +98,27 @@ export default {
             tmpObj.formattedViews = numeral(response.data[i].viewCount).format(
               "0a"
             );
+            if (
+              tmpObj.formattedViews.charAt(tmpObj.formattedViews.length - 1) ==
+              "m"
+            ) {
+              var strtmp =
+                tmpObj.formattedViews.substr(
+                  0,
+                  tmpObj.formattedViews.length - 1
+                ) + "M";
+              tmpObj.formattedViews = strtmp;
+            }
+            tmpObj.formattedViews += " views";
             this.videoArray.push(tmpObj);
           }
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+          if (error.code == "ECONNABORTED") {
+            this.failed = true;
+          }
+          console.log(error.code);
+        })
         .then(() => (this.loading = false));
     },
     checkActive() {
@@ -98,12 +141,12 @@ export default {
 </script>
 
 <style scoped>
-  .tab{
-    margin: 0 auto;
+.tab {
+  margin: 0 auto;
+}
+@media screen and (min-width: 768px) {
+  .tab {
+    width: 50% !important;
   }
-  @media screen and (min-width: 768px) {
-    .tab{
-      width: 50%!important;
-    }
-  }
+}
 </style>

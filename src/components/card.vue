@@ -28,8 +28,9 @@
     <div class="card-body" v-if="mode == 'main'">
       Published: {{video.publishedText}}
       <br />
-      Views: {{ video.formattedViews }}
+      {{ video.formattedViews }}
     </div>
+    <div class="card-body" v-else>{{ video.viewCountText }}</div>
   </div>
 </template>
 

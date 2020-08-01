@@ -1,17 +1,34 @@
 <template>
   <div class="container2">
     <div v-if="loading" class="loading loading-lg"></div>
-    <div class="columns" v-else>
-      <div class="column col-lg-12 col-10">
-        <videoplayer :videoInfo="videoInfo" />
-        <videoinfo :videoInfo="videoInfo" />
-        <comments :videoId="videoId" v-if="myWidth > 960" />
+    <div v-else>
+      <div v-if="failed">
+        <div class="empty">
+          <div class="empty-icon">
+            <unicon name="sad-dizzy" fill="var(--primary)" width="50px" height="50px" />
+          </div>
+          <p class="empty-title h5">Connection error</p>
+          <p class="empty-subtitle">
+            The request to indvidio.us servers took too long.
+            <br />Check your connection and try again.
+          </p>
+          <div class="empty-action">
+            <button class="btn btn-primary" @click="reconnect()">RETRY</button>
+          </div>
+        </div>
       </div>
-      <div class="column col-lg-12 col-2">
-        <recommended :videoInfo="videoInfo" />
-      </div>
-      <div class="column col-12">
-        <comments :videoId="videoId" v-if="myWidth <= 960" />
+      <div class="columns" v-else>
+        <div class="column col-lg-12 col-10">
+          <videoplayer :videoInfo="videoInfo" />
+          <videoinfo :videoInfo="videoInfo" />
+          <comments :videoId="videoId" v-if="myWidth > 960" />
+        </div>
+        <div class="column col-lg-12 col-2">
+          <recommended :videoInfo="videoInfo" />
+        </div>
+        <div class="column col-12">
+          <comments :videoId="videoId" v-if="myWidth <= 960" />
+        </div>
       </div>
     </div>
   </div>
@@ -44,17 +61,24 @@ export default {
       loading: true,
       myWidth: 0,
       myHeight: 0,
-      videoInfo: []
+      videoInfo: [],
+      failed: false
     };
   },
   methods: {
+    reconnect() {
+      this.loading = true;
+      this.failed = false;
+      this.getVideo();
+    },
     displayWindowSize() {
       this.myWidth = window.innerWidth;
       this.myHeight = window.innerHeight;
     },
     getVideo() {
       axios({
-        url: "https://invidio.us/api/v1/videos/" + this.videoId
+        url: "https://invidio.us/api/v1/videos/" + this.videoId,
+        timeout: 10000
       })
         .then(response => {
           this.videoInfo.push(response.data);
@@ -72,7 +96,12 @@ export default {
             response.data.viewCount
           ).format("0a");
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+          if (error.code == "ECONNABORTED") {
+            this.failed = true;
+          }
+          console.log(error.code);
+        })
         .then(() => (this.loading = false));
     }
   }

@@ -4,9 +4,9 @@ import router from './router'
 import "spectre.css"
 import VuePlyr from 'vue-plyr'
 import Unicon from 'vue-unicons'
-import { uniThumbsUp, uniThumbsDown, uniAngleDown, uniFire, uniChartLine, uniFrown, uniYoutube, uniCircleLayer } from 'vue-unicons/src/icons'
+import { uniThumbsUp, uniThumbsDown, uniAngleDown, uniFire, uniChartLine, uniFrown, uniYoutube, uniCircleLayer, uniSadDizzy, uniAngleUp } from 'vue-unicons/src/icons'
 
-Unicon.add([uniThumbsUp, uniThumbsDown, uniAngleDown, uniFire, uniChartLine, uniFrown, uniYoutube, uniCircleLayer])
+Unicon.add([uniThumbsUp, uniThumbsDown, uniAngleDown, uniFire, uniChartLine, uniFrown, uniYoutube, uniCircleLayer, uniSadDizzy, uniAngleUp])
 Vue.use(Unicon)
 
 // The second argument is optional and sets the default config values for every player.
