@@ -1,5 +1,5 @@
 # Invuedious
- A basic frontend for invidious that uses the invidious APIs.
+ A basic frontend for invidious that uses the invidious APIs. Demo: https://bocchilorenzo.github.io/invuedious
 
 ## In progress
 - Sort videos
