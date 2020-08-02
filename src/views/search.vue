@@ -18,7 +18,7 @@
                     params: { q: query }
                 }"
         >
-          <unicon name="channel" fill="var(--primary)" />CHANNELS
+          <unicon name="tv-retro" fill="var(--primary)" />CHANNELS
         </router-link>
       </li>
     </ul>
@@ -41,9 +41,19 @@
           </div>
         </div>
         <div v-else>
-          <cardContainer :videoArray="dataArray" v-if="mode == 'searchVideo'" />
-          <roundedCardContainer :dataArray="dataArray" v-else />
-          <div class="loading loading-lg"></div>
+          <div v-if="dataArray.length == 0">
+            <div class="empty">
+              <div class="empty-icon">
+                <unicon name="frown" fill="var(--primary)" width="50px" height="50px" />
+              </div>
+              <p class="empty-title h5">No results found</p>
+            </div>
+          </div>
+          <div v-else>
+            <cardContainer :videoArray="dataArray" v-if="mode == 'searchVideo'" />
+            <roundedCardContainer :dataArray="dataArray" v-else />
+            <div v-if="!stop" class="loading loading-lg"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -69,7 +79,8 @@ export default {
       mode: this.$route.name,
       page: 1,
       bottom: false,
-      failed: false
+      failed: false,
+      stop: false
     };
   },
   mounted() {
@@ -123,36 +134,39 @@ export default {
         timeout: 10000
       })
         .then(response => {
-          let tmpObj = {};
-          let tmp = false;
-          for (let i = 0; i < response.data.length; i++) {
-            tmpObj = response.data[i];
-            tmpObj.formattedViews = numeral(response.data[i].viewCount).format(
-              "0a"
-            );
-            if (
-              tmpObj.formattedViews.charAt(tmpObj.formattedViews.length - 1) ==
-              "m"
-            ) {
-              var strtmp =
-                tmpObj.formattedViews.substr(
-                  0,
+          if (!this.stop) {
+            let tmpObj = {};
+            let tmp = false;
+            for (let i = 0; i < response.data.length; i++) {
+              tmpObj = response.data[i];
+              tmpObj.formattedViews = numeral(
+                response.data[i].viewCount
+              ).format("0a");
+              if (
+                tmpObj.formattedViews.charAt(
                   tmpObj.formattedViews.length - 1
-                ) + "M";
-              tmpObj.formattedViews = strtmp;
+                ) == "m"
+              ) {
+                var strtmp =
+                  tmpObj.formattedViews.substr(
+                    0,
+                    tmpObj.formattedViews.length - 1
+                  ) + "M";
+                tmpObj.formattedViews = strtmp;
+              }
+              tmpObj.formattedViews += " views";
+              tmp = this.checkDouble(response.data[i].videoId, "video");
+              if (tmp == false) {
+                this.dataArray.push(tmpObj);
+              }
             }
-            tmpObj.formattedViews += " views";
-            tmp = this.checkDouble(response.data[i].videoId, "video");
-            if (tmp == false) {
-              this.dataArray.push(tmpObj);
+            if (response.data.length < 20) {
+              this.stop = true;
             }
           }
         })
-        .catch(error => {
-          if (error.code == "ECONNABORTED") {
-            this.failed = true;
-          }
-          console.log(error.code);
+        .catch(() => {
+          this.failed = true;
         })
         .then(() => (this.page += 1))
         .then(() => (this.loading = false));
@@ -168,35 +182,37 @@ export default {
         timeout: 10000
       })
         .then(response => {
-          let tmpObj = {};
-          let tmp = false;
-          for (let i = 0; i < response.data.length; i++) {
-            tmpObj = response.data[i];
-            tmpObj.formattedSubs = numeral(response.data[i].subCount).format(
-              "0a"
-            );
-            if (
-              tmpObj.formattedSubs.charAt(tmpObj.formattedSubs.length - 1) ==
-              "m"
-            ) {
-              var strtmp =
-                tmpObj.formattedSubs.substr(
-                  0,
-                  tmpObj.formattedSubs.length - 1
-                ) + "M";
-              tmpObj.formattedSubs = strtmp;
+          if (!this.stop) {
+            let tmpObj = {};
+            let tmp = false;
+            for (let i = 0; i < response.data.length; i++) {
+              tmpObj = response.data[i];
+              tmpObj.formattedSubs = numeral(response.data[i].subCount).format(
+                "0a"
+              );
+              if (
+                tmpObj.formattedSubs.charAt(tmpObj.formattedSubs.length - 1) ==
+                "m"
+              ) {
+                var strtmp =
+                  tmpObj.formattedSubs.substr(
+                    0,
+                    tmpObj.formattedSubs.length - 1
+                  ) + "M";
+                tmpObj.formattedSubs = strtmp;
+              }
+              tmp = this.checkDouble(response.data[i].authorId, "channel");
+              if (tmp == false) {
+                this.dataArray.push(tmpObj);
+              }
             }
-            tmp = this.checkDouble(response.data[i].authorId, "channel");
-            if (tmp == false) {
-              this.dataArray.push(tmpObj);
+            if (response.data.length < 20) {
+              this.stop = true;
             }
           }
         })
-        .catch(error => {
-          if (error.code == "ECONNABORTED") {
-            this.failed = true;
-          }
-          console.log(error.code);
+        .catch(() => {
+          this.failed = true;
         })
         .then(() => (this.page += 1))
         .then(() => (this.loading = false));

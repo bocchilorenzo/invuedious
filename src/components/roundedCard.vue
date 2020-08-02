@@ -9,7 +9,7 @@
                 }"
     >
       <div class="card-image">
-        <img :src="channelData.authorThumbnails[2].url" class="img-responsive" />
+        <img :src="channelData.authorThumbnails[2].url" class="img-responsive" :alt="channelData.author" />
       </div>
     </router-link>
     <div class="card-header">

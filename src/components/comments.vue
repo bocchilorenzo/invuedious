@@ -20,42 +20,7 @@
       <p>{{commentCount}} Comments:</p>
       <div class="panel">
         <div class="panel-body">
-          <div class="commentCard" v-for="comment in comments" :key="comment.commentId">
-            <div class="card">
-              <div class="card-header">
-                <div v-if="comment.authorIsChannelOwner" class="card-title h6 owner">
-                  <figure
-                    class="avatar avatar-lg"
-                    :data-initial="comment.author.charAt(0)"
-                    style="background-color: #5755d9;"
-                  >
-                    <img :src="comment.authorThumbnails[0].url" name="profile picture" />
-                  </figure>
-                  {{comment.author}}
-                </div>
-                <div class="card-title h6" v-else>
-                  <figure
-                    class="avatar avatar-lg"
-                    :data-initial="comment.author.charAt(0)"
-                    style="background-color: #5755d9;"
-                  >
-                    <img :src="comment.authorThumbnails[0].url" name="profile picture" />
-                  </figure>
-                  {{comment.author}}
-                </div>
-                <div class="card-subtitle text-gray">
-                  <span>Published: {{comment.publishedText}}</span>
-                  <span v-if="comment.isEdited">(Edited)</span>
-                </div>
-              </div>
-              <div class="card-body">
-                <div v-html="comment.contentHtml"></div>
-                <br />
-                <unicon name="thumbs-up" fill="var(--primary)" />
-                {{comment.likeCount}}
-              </div>
-            </div>
-          </div>
+          <commentCard v-for="comment in comments" :key="comment.commentId" :commentData="comment" :videoId="videoId" />
         </div>
       </div>
       <div class="loading loading-lg bottomLoader"></div>
@@ -65,11 +30,15 @@
 
 <script>
 import axios from "axios";
+import commentCard from './commentCard.vue'
 
 export default {
   name: "comments",
   props: {
     videoId: String
+  },
+  components:{
+    commentCard
   },
   data() {
     return {
@@ -144,20 +113,10 @@ export default {
 .panel {
   border: none !important;
 }
-.owner {
-  color: yellow;
-}
 .bottomLoader {
   margin-bottom: 40px;
 }
 p {
   color: white;
-}
-.commentCard {
-  margin-bottom: 1em;
-}
-.commentCard .card {
-  margin-bottom: 0;
-  background-color: var(--bg-dark)!important;
 }
 </style>

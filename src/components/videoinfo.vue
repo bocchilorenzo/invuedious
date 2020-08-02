@@ -21,22 +21,30 @@
     </div>
     <div class="divider"></div>
     <div>
-      <div class="authorInfo">
-        <figure
-          class="avatar avatar-xl"
-          :data-initial="videoInfo[0].author.charAt(0)"
-          style="background-color: #6f2232;"
-        >
-          <img :src="videoInfo[0].authorThumbnails[1].url" name="Channel image" />
-        </figure>
-        <span id="authorName" style="padding-left: 0.5em">{{videoInfo[0].author}}</span>
-      </div>
+      <!--INSERIRE ROUTER LINK CANALE-->
+      <router-link
+        :to="{
+                    name: 'channel',
+                    params: { id: videoInfo[0].authorId }
+                }"
+      >
+        <div class="authorInfo">
+          <figure
+            class="avatar avatar-xl"
+            :data-initial="videoInfo[0].author.charAt(0)"
+            style="background-color: #6f2232;"
+          >
+            <img :src="videoInfo[0].authorThumbnails[1].url" name="Channel image" :alt="videoInfo[0].author" />
+          </figure>
+          <span id="authorName">{{videoInfo[0].author}}</span>
+        </div>
+      </router-link>
       <div class="accordion">
         <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden />
         <label class="accordion-header" for="accordion-1" @click="descriptionIcon()">
           <p>Description</p>
-          <unicon name="angle-down" fill="var(--primary)" v-if="!open" />
-          <unicon name="angle-up" fill="var(--primary)" v-else />
+          <unicon name="angle-down" fill="white" v-if="!open" />
+          <unicon name="angle-up" fill="white" v-else />
         </label>
         <div v-html="videoInfo[0].descriptionHtml" class="accordion-body"></div>
       </div>
@@ -80,15 +88,21 @@ export default {
   display: flex !important;
   align-items: center;
   border-radius: 0.5em;
-  padding: 0 !important;
+  padding: 0 0.5em !important;
 }
 .accordion-header p {
   line-height: 24px;
   margin: 0;
 }
-#authorName,
-.accordion-header p:hover {
+#authorName {
   color: var(--primary);
+}
+.accordion-header:hover{
+  background-color: var(--bg-dark);
+}
+#authorName {
+  font-size: 1.1rem;
+  padding-left: 0.5em;
 }
 .accordion-body {
   padding-top: 1em;
@@ -108,5 +122,6 @@ p {
 }
 .authorInfo {
   margin: 1em 0 0.5em;
+  padding: 0 0.5em;
 }
 </style>

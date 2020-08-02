@@ -9,7 +9,7 @@
           </div>
           <p class="empty-title h5">Connection error</p>
           <p class="empty-subtitle">
-            The request to indvidio.us servers took too long.
+            The request to indvidio.us servers took too long, or the video doesn't exist.
             <br />Check your connection and try again.
           </p>
           <div class="empty-action">
@@ -96,11 +96,8 @@ export default {
             response.data.viewCount
           ).format("0a");
         })
-        .catch(error => {
-          if (error.code == "ECONNABORTED") {
-            this.failed = true;
-          }
-          console.log(error.code);
+        .catch(() => {
+          this.failed = true;
         })
         .then(() => (this.loading = false));
     }

@@ -8,7 +8,7 @@
         </div>
         <p class="empty-title h5">Connection error</p>
         <p class="empty-subtitle">
-          The request to indvidio.us servers took too long.
+          The request to indvidio.us servers took too long, or the channel doesn't exist.
           <br />Check your connection and try again.
         </p>
         <div class="empty-action">
@@ -16,29 +16,7 @@
         </div>
       </div>
     </div>
-    <header
-      class="channelBanner"
-      :style="{'background': 'url(' + dataArray[0].authorBanners[1].url + ')'}"
-    >
-      <div v-if="myWidth > 900" class="bannerContent">
-        <figure class="avatar avatar-xxl">
-          <img :src="dataArray[0].authorThumbnails[2].url" alt="..." />
-        </figure>
-        <div>
-          <h1 class="channelTitle">{{dataArray[0].author}}</h1>
-          <h5 class="channelSubtitle">Subscribers: {{dataArray[0].formattedSubs}}</h5>
-        </div>
-      </div>
-    </header>
-    <div v-if="myWidth <= 900" class="bannerContent">
-      <figure class="avatar avatar-xxl">
-        <img :src="dataArray[0].authorThumbnails[2].url" alt="..." />
-      </figure>
-      <div>
-        <h3 class="channelTitle">{{dataArray[0].author}}</h3>
-        <h6 class="channelSubtitle">Subscribers: {{dataArray[0].formattedSubs}}</h6>
-      </div>
-    </div>
+    <channelHeader :dataArray="dataArray" />
     <ul class="tab tab-block">
       <li class="tab-item" id="tab1" @click="setActive(1)">
         <router-link :to="{
@@ -51,7 +29,7 @@
         <router-link :to="{
                     name: 'channel',
                 }">
-          <unicon name="channel" fill="var(--primary)" />CHANNELS
+          <unicon name="tv-retro" fill="var(--primary)" />CHANNELS
         </router-link>
       </li>
       <li class="tab-item" id="tab3" @click="setActive(3)">
@@ -65,20 +43,42 @@
     <div v-if="innerLoading" class="loading loading-lg"></div>
     <div v-else>
       <div class="container2" v-if="mode == 'videos'">
-        <cardContainer :videoArray="videoArray" />
-        <div v-if="!stop" class="loading loading-lg"></div>
+        <div v-if="videoArray.length != 0">
+          <cardContainer :videoArray="videoArray" />
+          <div v-if="!stop" class="loading loading-lg"></div>
+        </div>
+        <div v-else>
+          <div class="empty">
+            <div class="empty-icon">
+              <unicon name="image-times" fill="var(--primary)" width="50px" height="50px" />
+            </div>
+            <p class="empty-title h5">No videos found</p>
+          </div>
+        </div>
       </div>
       <div class="container2" v-else>
-        <roundedCardContainer
-          :dataArray="dataArray[0].relatedChannels"
-          :mode="'channelInfo'"
-          v-if="mode == 'channels'"
-        />
-        <!--DESCRIPTION-->
+        <div v-if="mode == 'channels'">
+          <roundedCardContainer
+            :dataArray="dataArray[0].relatedChannels"
+            :mode="'channelInfo'"
+            v-if="dataArray[0].relatedChannels.length != 0"
+          />
+          <div v-else>
+            <div class="empty">
+              <div class="empty-icon">
+                <unicon name="tv-retro-slash" fill="var(--primary)" width="50px" height="50px" />
+              </div>
+              <p class="empty-title h5">No related channels</p>
+            </div>
+          </div>
+        </div>
         <div v-else id="channelDescription">
           <div v-html="dataArray[0].descriptionHtml" id="descriptionText"></div>
           <div>
-            <p>Joined {{dataArray[0].dateJoined}}</p>
+            <p>
+              Joined:
+              <span style="color:white">{{dataArray[0].dateJoined}}</span>
+            </p>
             <p>{{dataArray[0].formattedViews}}</p>
             <p>{{dataArray[0].formattedSubs}}</p>
           </div>
@@ -93,6 +93,7 @@ import axios from "axios";
 var numeral = require("numeral");
 import cardContainer from "../components/cardContainer.vue";
 import roundedCardContainer from "../components/roundedCardContainer.vue";
+import channelHeader from "../components/channelHeader.vue";
 export default {
   name: "channelPage",
   data() {
@@ -103,8 +104,6 @@ export default {
       dataArray: [],
       videoArray: [],
       id: this.$route.params.id,
-      myWidth: 0,
-      myHeight: 0,
       page: 1,
       stop: false,
       bottom: false,
@@ -113,12 +112,11 @@ export default {
   },
   components: {
     cardContainer,
-    roundedCardContainer
+    roundedCardContainer,
+    channelHeader
   },
   created() {
     this.getChannelData();
-    this.displayWindowSize();
-    window.onresize = this.displayWindowSize;
     this.getChannelVideos();
     window.addEventListener("scroll", () => {
       this.bottom = this.bottomVisible();
@@ -138,10 +136,6 @@ export default {
       this.getChannelData();
       this.getChannelVideos();
     },
-    displayWindowSize() {
-      this.myWidth = window.innerWidth;
-      this.myHeight = window.innerHeight;
-    },
     getChannelData() {
       var url = "https://invidio.us/api/v1/channels/" + this.id;
       axios({
@@ -160,16 +154,12 @@ export default {
               "M";
             tmpObj.formattedSubs = strtmp;
           }
-          tmpObj.formattedSubs += " subscribers";
           tmpObj.dateJoined = this.timeConverter(response.data.joined);
           tmpObj.formattedViews = response.data.totalViews + " views";
           this.dataArray.push(tmpObj);
         })
-        .catch(error => {
-          if (error.code == "ECONNABORTED") {
-            this.failed = true;
-          }
-          console.log(error.code);
+        .catch(() => {
+          this.failed = true;
         })
         .then(() => (this.loading = false))
         .then(() => this.setActive(1));
@@ -187,6 +177,7 @@ export default {
         .then(response => {
           let tmpObj = {};
           let tmp = false;
+          this.stop = false;
           if (response.data.length < 60) {
             this.stop = true;
           }
@@ -213,11 +204,8 @@ export default {
             }
           }
         })
-        .catch(error => {
-          if (error.code == "ECONNABORTED") {
-            this.failed = true;
-          }
-          console.log(error.code);
+        .catch(() => {
+          this.failed = true;
         })
         .then(() => (this.page += 1))
         .then(() => (this.innerLoading = false));
@@ -295,70 +283,6 @@ export default {
 </script>
 
 <style scoped>
-.channelBanner {
-  height: calc(100vw / 6);
-  box-shadow: inset 0 -120px 100px -10px rgba(0, 0, 0, 0.4);
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-end;
-  align-content: flex-end;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: contain !important;
-}
-.bannerContent {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-end;
-  align-content: flex-end;
-  padding: 0.5rem 1rem 1rem 1rem;
-}
-@media screen and (max-width: 900px) {
-  .bannerContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    align-content: flex-start;
-    padding: 0.5rem 1rem 1rem 1rem;
-    margin-top: -2.4em;
-  }
-}
-@media screen and (max-width: 1080px) {
-  .channelBanner {
-    box-shadow: inset 0 -80px 60px -10px rgba(0, 0, 0, 0.4);
-  }
-  .avatar-xxl {
-    width: 3rem !important;
-    height: 3rem !important;
-  }
-}
-@media screen and (max-width: 900px) {
-  .channelBanner {
-    box-shadow: none;
-  }
-}
-@media screen and (max-width: 700px) {
-  .avatar-xxl {
-    width: 2.5rem !important;
-    height: 2.5rem !important;
-  }
-}
-.avatar-xxl {
-  width: 4rem;
-  height: 4rem;
-}
-.channelTitle,
-.channelSubtitle {
-  color: var(--primary);
-  margin-left: 1rem;
-  margin-bottom: 0;
-}
-.channelSubtitle {
-  color: white;
-}
 p {
   color: var(--secondary);
 }

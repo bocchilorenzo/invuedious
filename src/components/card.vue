@@ -5,7 +5,6 @@
                     name: 'video',
                     path: '/video/:id',
                     params: { id: video.videoId },
-                    props: true,
                 }"
     >
       <div class="card-image">
@@ -18,12 +17,19 @@
                     name: 'video',
                     path: '/video/:id',
                     params: { id: video.videoId },
-                    props: true,
                 }"
       >
         <div class="card-title h6">{{ video.title }}</div>
       </router-link>
-      <div class="card-subtitle text-gray">{{ video.author }}</div>
+
+      <router-link
+        :to="{
+                    name: 'channel',
+                    params: { id: video.authorId },
+                }"
+      >
+        <div class="card-subtitle text-gray">{{ video.author }}</div>
+      </router-link>
     </div>
     <div class="card-body" v-if="mode == 'main'">
       Published: {{video.publishedText}}

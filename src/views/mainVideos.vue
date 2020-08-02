@@ -113,11 +113,8 @@ export default {
             this.videoArray.push(tmpObj);
           }
         })
-        .catch(error => {
-          if (error.code == "ECONNABORTED") {
-            this.failed = true;
-          }
-          console.log(error.code);
+        .catch(() => {
+          this.failed = true;
         })
         .then(() => (this.loading = false));
     },
