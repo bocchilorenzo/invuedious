@@ -8,7 +8,7 @@
                 }"
           class="navbar-brand mr-2"
         >
-          <unicon name="youtube" fill="black" id="barLogo" />INVIDIOUS
+          <unicon name="youtube" fill="black" id="barLogo" />INVUEDIOUS
         </router-link>
       </section>
     </header>

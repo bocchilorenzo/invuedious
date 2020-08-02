@@ -1,4 +1,4 @@
-# invidious-frontend
+# Invuedious
  A frontend for invidious that uses the invidious APIs.
 
 ## In progress
