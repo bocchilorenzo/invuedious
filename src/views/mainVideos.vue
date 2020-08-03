@@ -78,14 +78,14 @@ export default {
     getVideoData() {
       var url = "";
       if (this.$route.name == "popular") {
-        url = "https://invidio.us/api/v1/popular";
+        url = "https://invidious.snopyta.org/api/v1/popular";
       } else {
         /*
       else if(this.$route.name == "top"){
-        url = "https://invidio.us/api/v1/top"
+        url = "https://invidious.snopyta.org/api/v1/top"
       }
       */
-        url = "https://invidio.us/api/v1/trending";
+        url = "https://invidious.snopyta.org/api/v1/trending";
       }
       axios({
         url: url,
@@ -114,7 +114,7 @@ export default {
           }
         })
         .catch(() => {
-          this.failed = true;
+          this.getVideoData();
         })
         .then(() => (this.loading = false));
     },

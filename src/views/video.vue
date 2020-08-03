@@ -77,7 +77,7 @@ export default {
     },
     getVideo() {
       axios({
-        url: "https://invidio.us/api/v1/videos/" + this.videoId,
+        url: "https://invidious.snopyta.org/api/v1/videos/" + this.videoId,
         timeout: 10000
       })
         .then(response => {
