@@ -3,9 +3,10 @@ On October 1st 2020 the main instance of invidious will stop functioning. I have
 # Invuedious
  A basic frontend for invidious that uses the invidious APIs. Demo: https://bocchilorenzo.github.io/invuedious
 
-## In progress
+## Todo
 - Sort videos
 - Sort comments
+- Optimize code
 
 ## Known issues
 - Sometimes the invidious api doesn't work correctly and the requests fail (there's a retry button in case it happens)
