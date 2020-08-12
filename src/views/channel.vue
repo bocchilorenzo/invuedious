@@ -137,7 +137,7 @@ export default {
       this.getChannelVideos();
     },
     getChannelData() {
-      var url = "https://invidious.snopyta.org/api/v1/channels/" + this.id;
+      var url = "https://yt.iswleuven.be/api/v1/channels/" + this.id;
       axios({
         url: url,
         timeout: 10000
@@ -166,7 +166,7 @@ export default {
     },
     getChannelVideos() {
       var url =
-        "https://invidious.snopyta.org/api/v1/channels/videos/" +
+        "https://yt.iswleuven.be/api/v1/channels/videos/" +
         this.id +
         "?page=" +
         this.page;

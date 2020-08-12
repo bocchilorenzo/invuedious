@@ -79,7 +79,7 @@ export default {
     getReplies() {
       this.innerLoading = true;
       var url =
-        "https://invidious.snopyta.org/api/v1/comments/" + this.videoId + "?continuation=";
+        "https://yt.iswleuven.be/api/v1/comments/" + this.videoId + "?continuation=";
       if (this.begin) {
         url += this.initialContinuation;
       } else {

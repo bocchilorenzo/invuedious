@@ -77,7 +77,7 @@ export default {
     getComments() {
       axios({
         url:
-          "https://invidious.snopyta.org/api/v1/comments/" +
+          "https://yt.iswleuven.be/api/v1/comments/" +
           this.videoId +
           "?continuation=" +
           this.continuation,
