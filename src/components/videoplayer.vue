@@ -14,7 +14,7 @@
     <vue-plyr ref="plyr">
       <!--use crossorigin attribute to display captions-->
       <video
-        :poster="videoInfo[0].videoThumbnails[0].url"
+        :poster="videoInfo[0].videoThumbnails[1].url"
         playsinline
         :src="videoInfo[0].formatStreams[0].url"
         width="100%"
