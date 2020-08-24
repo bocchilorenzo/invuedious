@@ -79,7 +79,7 @@ export default {
     getReplies() {
       this.innerLoading = true;
       var url =
-        "https://yt.iswleuven.be/api/v1/comments/" + this.videoId + "?continuation=";
+        "https://invidious.13ad.de/api/v1/comments/" + this.videoId + "?continuation=";
       if (this.begin) {
         url += this.initialContinuation;
       } else {

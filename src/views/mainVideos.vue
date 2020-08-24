@@ -78,14 +78,14 @@ export default {
     getVideoData() {
       var url = "";
       if (this.$route.name == "popular") {
-        url = "https://yt.iswleuven.be/api/v1/popular";
+        url = "https://invidious.13ad.de/api/v1/popular";
       } else {
         /*
       else if(this.$route.name == "top"){
-        url = "https://yt.iswleuven.be/api/v1/top"
+        url = "https://invidious.13ad.de/api/v1/top"
       }
       */
-        url = "https://yt.iswleuven.be/api/v1/trending";
+        url = "https://invidious.13ad.de/api/v1/trending";
       }
       axios({
         url: url,

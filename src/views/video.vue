@@ -77,7 +77,7 @@ export default {
     },
     getVideo() {
       axios({
-        url: "https://yt.iswleuven.be/api/v1/videos/" + this.videoId,
+        url: "https://invidious.13ad.de/api/v1/videos/" + this.videoId,
         timeout: 10000
       })
         .then(response => {
