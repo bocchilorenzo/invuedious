@@ -125,7 +125,7 @@ export default {
     },
     getVideoData() {
       var url =
-        "https://invidious.snopyta.org/api/v1/search?q=" +
+        "https://invidious.kavin.rocks/api/v1/search?q=" +
         this.query +
         "&page=" +
         this.page;
@@ -173,7 +173,7 @@ export default {
     },
     getChannelsData() {
       var url =
-        "https://invidious.snopyta.org/api/v1/search?q=" +
+        "https://invidious.kavin.rocks/api/v1/search?q=" +
         this.query +
         "&type=channel&page=" +
         this.page;

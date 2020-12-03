@@ -32,7 +32,7 @@
           :key="caption.url"
           kind="captions"
           :label="caption.label"
-          :src="'https://invidious.snopyta.org'+caption.url"
+          :src="'https://invidious.kavin.rocks'+caption.url"
           :srclang="caption.languageCode"
           default
         />
