@@ -1,21 +1,21 @@
 <template>
   <div>
     <h4 id="videoTitle">
-      <b>{{videoInfo[0].title}}</b>
+      <b>{{ videoInfo[0].title }}</b>
     </h4>
     <div id="infoSmall">
       <div>
-        <p>Views: {{videoInfo[0].formattedViews}}</p>
-        <p>Published: {{videoInfo[0].publishedText}}</p>
+        <p>Views: {{ videoInfo[0].formattedViews }}</p>
+        <p>Published: {{ videoInfo[0].publishedText }}</p>
       </div>
       <div>
         <p>
           <unicon name="thumbs-up" fill="var(--primary)" />
-          Likes: {{videoInfo[0].likeCount}}
+          Likes: {{ videoInfo[0].likeCount }}
         </p>
         <p>
           <unicon name="thumbs-down" fill="var(--primary)" />
-          Dislikes: {{videoInfo[0].dislikeCount}}
+          Dislikes: {{ videoInfo[0].dislikeCount }}
         </p>
       </div>
     </div>
@@ -24,24 +24,36 @@
       <!--INSERIRE ROUTER LINK CANALE-->
       <router-link
         :to="{
-                    name: 'channel',
-                    params: { id: videoInfo[0].authorId }
-                }"
+          name: 'channel',
+          params: { id: videoInfo[0].authorId },
+        }"
       >
         <div class="authorInfo">
           <figure
             class="avatar avatar-xl"
             :data-initial="videoInfo[0].author.charAt(0)"
-            style="background-color: #6f2232;"
+            style="background-color: #6f2232"
           >
-            <img :src="videoInfo[0].authorThumbnails[1].url" name="Channel image" :alt="videoInfo[0].author" />
+            <img
+              :src="videoInfo[0].authorThumbnails[1].url"
+              name="Channel image"
+            />
           </figure>
-          <span id="authorName">{{videoInfo[0].author}}</span>
+          <span id="authorName">{{ videoInfo[0].author }}</span>
         </div>
       </router-link>
       <div class="accordion">
-        <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden />
-        <label class="accordion-header" for="accordion-1" @click="descriptionIcon()">
+        <input
+          type="checkbox"
+          id="accordion-1"
+          name="accordion-checkbox"
+          hidden
+        />
+        <label
+          class="accordion-header"
+          for="accordion-1"
+          @click="descriptionIcon()"
+        >
           <p>Description</p>
           <unicon name="angle-down" fill="white" v-if="!open" />
           <unicon name="angle-up" fill="white" v-else />
@@ -49,6 +61,7 @@
         <div v-html="videoInfo[0].descriptionHtml" class="accordion-body"></div>
       </div>
     </div>
+    <div class="divider"></div>
   </div>
 </template>
 
@@ -56,18 +69,18 @@
 export default {
   name: "videoinfo",
   props: {
-    videoInfo: Array
+    videoInfo: Array,
   },
   data() {
     return {
-      open: false
+      open: false,
     };
   },
   methods: {
     descriptionIcon() {
       this.open = !this.open;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -97,7 +110,7 @@ export default {
 #authorName {
   color: var(--primary);
 }
-.accordion-header:hover{
+.accordion-header:hover {
   background-color: var(--bg-dark);
 }
 #authorName {
@@ -123,5 +136,8 @@ p {
 .authorInfo {
   margin: 1em 0 0.5em;
   padding: 0 0.5em;
+}
+.divider {
+  border-top: 0.05rem solid #727272;
 }
 </style>

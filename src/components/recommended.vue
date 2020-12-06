@@ -18,11 +18,11 @@ import card from "./card.vue";
 export default {
   name: "recommended",
   props: {
-    videoInfo: Array
+    videoInfo: Array,
   },
   components: {
-    card
-  }
+    card,
+  },
 };
 </script>
 

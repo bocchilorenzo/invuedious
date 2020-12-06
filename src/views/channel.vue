@@ -4,11 +4,17 @@
     <div v-if="failed">
       <div class="empty">
         <div class="empty-icon">
-          <unicon name="sad-dizzy" fill="var(--primary)" width="50px" height="50px" />
+          <unicon
+            name="sad-dizzy"
+            fill="var(--primary)"
+            width="50px"
+            height="50px"
+          />
         </div>
         <p class="empty-title h5">Connection error</p>
         <p class="empty-subtitle">
-          The request to indvidio.us servers took too long, or the channel doesn't exist.
+          The request to indvidio.us servers took too long, or the channel
+          doesn't exist.
           <br />Check your connection and try again.
         </p>
         <div class="empty-action">
@@ -19,23 +25,29 @@
     <channelHeader :dataArray="dataArray" />
     <ul class="tab tab-block">
       <li class="tab-item" id="tab1" @click="setActive(1)">
-        <router-link :to="{
-                    name: 'channel',
-                }">
+        <router-link
+          :to="{
+            name: 'channel',
+          }"
+        >
           <unicon name="video" fill="var(--primary)" />VIDEOS
         </router-link>
       </li>
       <li class="tab-item" id="tab2" @click="setActive(2)">
-        <router-link :to="{
-                    name: 'channel',
-                }">
+        <router-link
+          :to="{
+            name: 'channel',
+          }"
+        >
           <unicon name="tv-retro" fill="var(--primary)" />CHANNELS
         </router-link>
       </li>
       <li class="tab-item" id="tab3" @click="setActive(3)">
-        <router-link :to="{
-                    name: 'channel',
-                }">
+        <router-link
+          :to="{
+            name: 'channel',
+          }"
+        >
           <unicon name="info-circle" fill="var(--primary)" />ABOUT
         </router-link>
       </li>
@@ -50,7 +62,12 @@
         <div v-else>
           <div class="empty">
             <div class="empty-icon">
-              <unicon name="image-times" fill="var(--primary)" width="50px" height="50px" />
+              <unicon
+                name="image-times"
+                fill="var(--primary)"
+                width="50px"
+                height="50px"
+              />
             </div>
             <p class="empty-title h5">No videos found</p>
           </div>
@@ -66,7 +83,12 @@
           <div v-else>
             <div class="empty">
               <div class="empty-icon">
-                <unicon name="tv-retro-slash" fill="var(--primary)" width="50px" height="50px" />
+                <unicon
+                  name="tv-retro-slash"
+                  fill="var(--primary)"
+                  width="50px"
+                  height="50px"
+                />
               </div>
               <p class="empty-title h5">No related channels</p>
             </div>
@@ -77,10 +99,10 @@
           <div>
             <p>
               Joined:
-              <span style="color:white">{{dataArray[0].dateJoined}}</span>
+              <span style="color: white">{{ dataArray[0].dateJoined }}</span>
             </p>
-            <p>{{dataArray[0].formattedViews}}</p>
-            <p>{{dataArray[0].formattedSubs}}</p>
+            <p>{{ dataArray[0].formattedViews }}</p>
+            <p>{{ dataArray[0].formattedSubs }}</p>
           </div>
         </div>
       </div>
@@ -107,13 +129,13 @@ export default {
       page: 1,
       stop: false,
       bottom: false,
-      failed: false
+      failed: false,
     };
   },
   components: {
     cardContainer,
     roundedCardContainer,
-    channelHeader
+    channelHeader,
   },
   created() {
     this.getChannelData();
@@ -137,12 +159,13 @@ export default {
       this.getChannelVideos();
     },
     getChannelData() {
-      var url = "https://invidious.kavin.rocks/api/v1/channels/" + this.id;
+      var url = "https://invidiou.site/api/v1/channels/" + this.id;
       axios({
         url: url,
-        timeout: 10000
+        timeout: 10000,
       })
-        .then(response => {
+        .then((response) => {
+          document.title = response.data.author + " - Invuedious";
           let tmpObj = {};
           tmpObj = response.data;
           tmpObj.formattedSubs = numeral(response.data.subCount).format("0a");
@@ -166,15 +189,15 @@ export default {
     },
     getChannelVideos() {
       var url =
-        "https://invidious.kavin.rocks/api/v1/channels/videos/" +
+        "https://invidiou.site/api/v1/channels/videos/" +
         this.id +
         "?page=" +
         this.page;
       axios({
         url: url,
-        timeout: 10000
+        timeout: 10000,
       })
-        .then(response => {
+        .then((response) => {
           let tmpObj = {};
           let tmp = false;
           this.stop = false;
@@ -268,7 +291,7 @@ export default {
         document.getElementById("tab2").classList.remove("active");
         document.getElementById("tab1").classList.remove("active");
       }
-    }
+    },
   },
   watch: {
     bottom(bottom) {
@@ -277,8 +300,8 @@ export default {
           this.getChannelVideos();
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

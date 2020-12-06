@@ -79,7 +79,7 @@ export default {
     getReplies() {
       this.innerLoading = true;
       var url =
-        "https://invidious.kavin.rocks/api/v1/comments/" + this.videoId + "?continuation=";
+        "https://invidiou.site/api/v1/comments/" + this.videoId + "?continuation=";
       if (this.begin) {
         url += this.initialContinuation;
       } else {

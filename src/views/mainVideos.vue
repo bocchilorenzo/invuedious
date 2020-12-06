@@ -2,9 +2,11 @@
   <div>
     <ul class="tab tab-block">
       <li class="tab-item" id="tab1">
-        <router-link :to="{
-                    name: 'popular',
-                }">
+        <router-link
+          :to="{
+            name: 'popular',
+          }"
+        >
           <unicon name="fire" fill="var(--primary)" />POPULAR
         </router-link>
       </li>
@@ -16,9 +18,11 @@
       </li>
       -->
       <li class="tab-item" id="tab3">
-        <router-link :to="{
-                    name: 'trending',
-                }">
+        <router-link
+          :to="{
+            name: 'trending',
+          }"
+        >
           <unicon name="chart-line" fill="var(--primary)" />TRENDING
         </router-link>
       </li>
@@ -29,7 +33,12 @@
         <div v-if="failed">
           <div class="empty">
             <div class="empty-icon">
-              <unicon name="sad-dizzy" fill="var(--primary)" width="50px" height="50px" />
+              <unicon
+                name="sad-dizzy"
+                fill="var(--primary)"
+                width="50px"
+                height="50px"
+              />
             </div>
             <p class="empty-title h5">Connection error</p>
             <p class="empty-subtitle">
@@ -37,8 +46,25 @@
               <br />Check your connection and try again.
             </p>
             <div class="empty-action">
-              <button class="btn btn-primary" @click="reconnect()">RETRY</button>
+              <button class="btn btn-primary" @click="reconnect()">
+                RETRY
+              </button>
             </div>
+          </div>
+        </div>
+        <div v-else-if="videoArray.length == 0">
+          <div class="empty">
+            <div class="empty-icon">
+              <unicon
+                name="sad-dizzy"
+                fill="var(--primary)"
+                width="50px"
+                height="50px"
+              />
+            </div>
+            <p class="empty-subtitle">
+              There was an issue retrieving the videos
+            </p>
           </div>
         </div>
         <cardContainer v-else :videoArray="videoArray" />
@@ -54,19 +80,20 @@ import axios from "axios";
 export default {
   name: "mainPage",
   components: {
-    cardContainer
+    cardContainer,
   },
   data() {
     return {
       videoArray: [],
       loading: true,
-      failed: false
+      failed: false,
     };
   },
   mounted() {
     this.checkActive();
   },
   created() {
+    document.title = "Invuedious";
     this.getVideoData();
   },
   methods: {
@@ -78,20 +105,20 @@ export default {
     getVideoData() {
       var url = "";
       if (this.$route.name == "popular") {
-        url = "https://invidious.kavin.rocks/api/v1/popular";
+        url = "https://invidiou.site/api/v1/popular";
       } else {
         /*
       else if(this.$route.name == "top"){
-        url = "https://invidious.kavin.rocks/api/v1/top"
+        url = "https://invidiou.site/api/v1/top"
       }
       */
-        url = "https://invidious.kavin.rocks/api/v1/trending";
+        url = "https://invidiou.site/api/v1/trending";
       }
       axios({
         url: url,
-        timeout: 1000
+        timeout: 1000,
       })
-        .then(response => {
+        .then((response) => {
           var tmpObj = {};
           for (let i = 0; i < response.data.length; i++) {
             tmpObj = response.data[i];
@@ -132,8 +159,8 @@ export default {
         //document.getElementById("tab2").classList.remove("active");
         document.getElementById("tab1").classList.remove("active");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -77,6 +77,9 @@ export default {
   border-radius: 0 1em 0 0!important;
 }
 */
+.card-image img{
+  width: 100%;
+}
 .videoDuration {
   position: absolute;
   right: 0;

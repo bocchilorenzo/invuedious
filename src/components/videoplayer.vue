@@ -14,7 +14,7 @@
     <vue-plyr ref="plyr">
       <!--use crossorigin attribute to display captions-->
       <video
-        :poster="videoInfo[0].videoThumbnails[1].url"
+        :poster="videoInfo[0].thumb"
         playsinline
         :src="videoInfo[0].formatStreams[0].url"
         width="100%"
@@ -32,7 +32,7 @@
           :key="caption.url"
           kind="captions"
           :label="caption.label"
-          :src="'https://invidious.kavin.rocks'+caption.url"
+          :src="'https://invidiou.site'+caption.url"
           :srclang="caption.languageCode"
           default
         />

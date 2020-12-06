@@ -209,3 +209,9 @@ a:hover {
     width: 50% !important;
   }
 }
+
+.overflow-ellipsis {
+  text-overflow: ellipsis;
+  overflow     : hidden;
+  width: 100%;
+}

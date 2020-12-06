@@ -5,11 +5,17 @@
       <div v-if="failed">
         <div class="empty">
           <div class="empty-icon">
-            <unicon name="sad-dizzy" fill="var(--primary)" width="50px" height="50px" />
+            <unicon
+              name="sad-dizzy"
+              fill="var(--primary)"
+              width="50px"
+              height="50px"
+            />
           </div>
           <p class="empty-title h5">Connection error</p>
           <p class="empty-subtitle">
-            The request to indvidio.us servers took too long, or the video doesn't exist.
+            The request to indvidio.us servers took too long, or the video
+            doesn't exist.
             <br />Check your connection and try again.
           </p>
           <div class="empty-action">
@@ -18,12 +24,12 @@
         </div>
       </div>
       <div class="columns" v-else>
-        <div class="column col-lg-12 col-10">
+        <div class="column col-lg-12 col-9">
           <videoplayer :videoInfo="videoInfo" />
           <videoinfo :videoInfo="videoInfo" />
           <comments :videoId="videoId" v-if="myWidth > 960" />
         </div>
-        <div class="column col-lg-12 col-2">
+        <div class="column col-lg-12 col-3 customMargin">
           <recommended :videoInfo="videoInfo" />
         </div>
         <div class="column col-12">
@@ -53,7 +59,7 @@ export default {
     videoplayer,
     videoinfo,
     recommended,
-    comments
+    comments,
   },
   data() {
     return {
@@ -62,7 +68,7 @@ export default {
       myWidth: 0,
       myHeight: 0,
       videoInfo: [],
-      failed: false
+      failed: false,
     };
   },
   methods: {
@@ -77,12 +83,14 @@ export default {
     },
     getVideo() {
       axios({
-        url: "https://invidious.kavin.rocks/api/v1/videos/" + this.videoId,
-        timeout: 10000
+        url: "https://invidiou.site/api/v1/videos/" + this.videoId,
+        timeout: 10000,
       })
-        .then(response => {
+        .then((response) => {
           this.videoInfo.push(response.data);
-          for (var i = 0; i < this.videoInfo[0].formatStreams.length; i++) {
+          document.title = this.videoInfo[0].title + " - Invuedious";
+          this.videoInfo[0].thumb = this.videoInfo[0].videoThumbnails[2].url;
+          for (let i = 0; i < this.videoInfo[0].formatStreams.length; i++) {
             this.videoInfo[0].formatStreams[
               i
             ].qualityLabel = this.videoInfo[0].formatStreams[
@@ -91,17 +99,32 @@ export default {
               0,
               this.videoInfo[0].formatStreams[i].qualityLabel.length - 1
             );
+            if (this.videoInfo[0].formatStreams[i].qualityLabel == "720") {
+              this.videoInfo[0].thumb = this.videoInfo[0].videoThumbnails[1].url;
+            }
           }
           this.videoInfo[0].formattedViews = numeral(
             response.data.viewCount
           ).format("0a");
+          if (
+            this.videoInfo[0].formattedViews.charAt(
+              this.videoInfo[0].formattedViews.length - 1
+            ) == "m"
+          ) {
+            var strtmp =
+              this.videoInfo[0].formattedViews.substr(
+                0,
+                this.videoInfo[0].formattedViews.length - 1
+              ) + "M";
+            this.videoInfo[0].formattedViews = strtmp;
+          }
         })
         .catch(() => {
           this.failed = true;
         })
         .then(() => (this.loading = false));
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -111,5 +134,10 @@ export default {
   bottom: 0;
   left: 0;
   width: 100vw;
+}
+@media (min-width: 961px) {
+  .customMargin {
+    padding-left: 50px;
+  }
 }
 </style>

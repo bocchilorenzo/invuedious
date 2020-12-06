@@ -15,42 +15,45 @@ const routes = [
   {
     path: '/',
     name: 'popular',
-    component: mainPage
+    component: mainPage,
   },
   {
     path: '/top',
     name: 'top',
-    component: mainPage
+    component: mainPage,
   },
   {
     path: '/trending',
     name: 'trending',
-    component: mainPage
+    component: mainPage,
   },
   {
-    path: '/video/:id',
+    path: '/watch?v=:id',
     name: 'video',
-    component: videoPage
+    component: videoPage,
   },
   {
     path: '/search/videos/:q',
     name: 'searchVideo',
-    component: searchPage
+    component: searchPage,
   },
   {
     path: '/search/channels/:q',
     name: 'searchChannel',
-    component: searchPage
+    component: searchPage,
   },
   {
     path: '/channel/:id',
     name: 'channel',
-    component: channelPage
+    component: channelPage,
   }
 ]
 
 const router = new VueRouter({
-  routes
+  saveScrollPosition: false,
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: routes,
 })
 
 export default router

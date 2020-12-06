@@ -4,9 +4,9 @@
       <li class="tab-item" id="tab1">
         <router-link
           :to="{
-                    name: 'searchVideo',
-                    params: { q: query }
-                }"
+            name: 'searchVideo',
+            params: { q: query },
+          }"
         >
           <unicon name="video" fill="var(--primary)" />VIDEOS
         </router-link>
@@ -14,9 +14,9 @@
       <li class="tab-item" id="tab2">
         <router-link
           :to="{
-                    name: 'searchChannel',
-                    params: { q: query }
-                }"
+            name: 'searchChannel',
+            params: { q: query },
+          }"
         >
           <unicon name="tv-retro" fill="var(--primary)" />CHANNELS
         </router-link>
@@ -28,7 +28,12 @@
         <div v-if="failed">
           <div class="empty">
             <div class="empty-icon">
-              <unicon name="sad-dizzy" fill="var(--primary)" width="50px" height="50px" />
+              <unicon
+                name="sad-dizzy"
+                fill="var(--primary)"
+                width="50px"
+                height="50px"
+              />
             </div>
             <p class="empty-title h5">Connection error</p>
             <p class="empty-subtitle">
@@ -36,7 +41,9 @@
               <br />Check your connection and try again.
             </p>
             <div class="empty-action">
-              <button class="btn btn-primary" @click="reconnect()">RETRY</button>
+              <button class="btn btn-primary" @click="reconnect()">
+                RETRY
+              </button>
             </div>
           </div>
         </div>
@@ -44,13 +51,21 @@
           <div v-if="dataArray.length == 0">
             <div class="empty">
               <div class="empty-icon">
-                <unicon name="frown" fill="var(--primary)" width="50px" height="50px" />
+                <unicon
+                  name="frown"
+                  fill="var(--primary)"
+                  width="50px"
+                  height="50px"
+                />
               </div>
               <p class="empty-title h5">No results found</p>
             </div>
           </div>
           <div v-else>
-            <cardContainer :videoArray="dataArray" v-if="mode == 'searchVideo'" />
+            <cardContainer
+              :videoArray="dataArray"
+              v-if="mode == 'searchVideo'"
+            />
             <roundedCardContainer :dataArray="dataArray" v-else />
             <div v-if="!stop" class="loading loading-lg"></div>
           </div>
@@ -69,7 +84,7 @@ export default {
   name: "searchPage",
   components: {
     cardContainer,
-    roundedCardContainer
+    roundedCardContainer,
   },
   data() {
     return {
@@ -80,13 +95,14 @@ export default {
       page: 1,
       bottom: false,
       failed: false,
-      stop: false
+      stop: false,
     };
   },
   mounted() {
     this.checkActive();
   },
   created() {
+    document.title = this.query + " - Invuedious";
     if (this.mode == "searchVideo") {
       this.getVideoData();
     } else {
@@ -125,15 +141,15 @@ export default {
     },
     getVideoData() {
       var url =
-        "https://invidious.kavin.rocks/api/v1/search?q=" +
+        "https://invidiou.site/api/v1/search?q=" +
         this.query +
         "&page=" +
         this.page;
       axios({
         url: url,
-        timeout: 10000
+        timeout: 10000,
       })
-        .then(response => {
+        .then((response) => {
           if (!this.stop) {
             let tmpObj = {};
             let tmp = false;
@@ -173,15 +189,15 @@ export default {
     },
     getChannelsData() {
       var url =
-        "https://invidious.kavin.rocks/api/v1/search?q=" +
+        "https://invidiou.site/api/v1/search?q=" +
         this.query +
         "&type=channel&page=" +
         this.page;
       axios({
         url: url,
-        timeout: 10000
+        timeout: 10000,
       })
-        .then(response => {
+        .then((response) => {
           if (!this.stop) {
             let tmpObj = {};
             let tmp = false;
@@ -235,7 +251,7 @@ export default {
         }
       }
       return found;
-    }
+    },
   },
   watch: {
     bottom(bottom) {
@@ -246,8 +262,8 @@ export default {
           this.getChannelsData();
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
