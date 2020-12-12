@@ -28,7 +28,7 @@ const routes = [
     component: mainPage,
   },
   {
-    path: '/watch?v=:id',
+    path: '/watch/v=:id',
     name: 'video',
     component: videoPage,
   },
@@ -50,7 +50,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  saveScrollPosition: false,
+  saveScrollPosition: true,
   mode: 'history',
   base: process.env.BASE_URL,
   routes: routes,

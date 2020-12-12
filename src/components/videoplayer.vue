@@ -32,7 +32,7 @@
           :key="caption.url"
           kind="captions"
           :label="caption.label"
-          :src="'https://invidiou.site'+caption.url"
+          :src="'https://invidious.fdn.fr'+caption.url"
           :srclang="caption.languageCode"
           default
         />

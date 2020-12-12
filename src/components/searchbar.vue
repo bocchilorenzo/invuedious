@@ -1,16 +1,12 @@
 <template>
-  <div class="columns">
-    <div class="column col-10 col-mx-auto">
-      <div class="searchContainer">
-        <input
-          v-model="inputSearch"
-          class="search"
-          type="text"
-          placeholder="Search..."
-          @keyup.enter="search()"
-        />
-      </div>
-    </div>
+  <div class="searchContainer">
+    <input
+      v-model="inputSearch"
+      class="search"
+      type="text"
+      placeholder="Search..."
+      @keydown.enter="search()"
+    />
   </div>
 </template>
 
@@ -20,7 +16,7 @@ export default {
   name: "searchbar",
   data() {
     return {
-      inputSearch: this.$route.params.q
+      inputSearch: this.$route.params.q,
     };
   },
   methods: {
@@ -30,15 +26,39 @@ export default {
         query = stripHtml(this.inputSearch);
         this.$router.push({
           name: "searchVideo",
-          params: { q: query }
+          params: { q: query },
         });
       } else {
         console.log("Query non valida o campo vuoto. Riprova");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
+.searchContainer {
+  text-align: center;
+  margin: 1rem auto;
+  width: 100%;
+}
+
+@media (max-width: 301px) {
+  .searchContainer {
+    margin: 0.5rem auto;
+  }
+}
+
+.search {
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  height: 30px;
+  background-color: rgb(53, 53, 53);
+  border: none;
+  color: white;
+  border-radius: 0.3em;
+  padding: 0 1em;
+  font-size: 16px;
+}
 </style>

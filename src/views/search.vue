@@ -141,7 +141,7 @@ export default {
     },
     getVideoData() {
       var url =
-        "https://invidiou.site/api/v1/search?q=" +
+        "https://invidious.fdn.fr/api/v1/search?q=" +
         this.query +
         "&page=" +
         this.page;
@@ -189,7 +189,7 @@ export default {
     },
     getChannelsData() {
       var url =
-        "https://invidiou.site/api/v1/search?q=" +
+        "https://invidious.fdn.fr/api/v1/search?q=" +
         this.query +
         "&type=channel&page=" +
         this.page;

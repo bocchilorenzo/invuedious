@@ -23,17 +23,19 @@
           </div>
         </div>
       </div>
-      <div class="columns" v-else>
-        <div class="column col-lg-12 col-9">
-          <videoplayer :videoInfo="videoInfo" />
-          <videoinfo :videoInfo="videoInfo" />
-          <comments :videoId="videoId" v-if="myWidth > 960" />
-        </div>
-        <div class="column col-lg-12 col-3 customMargin">
-          <recommended :videoInfo="videoInfo" />
-        </div>
-        <div class="column col-12">
-          <comments :videoId="videoId" v-if="myWidth <= 960" />
+      <div v-else>
+        <div id="content" class="columns">
+          <div class="column col-lg-12 col-9">
+            <videoplayer :videoInfo="videoInfo" />
+            <videoinfo :videoInfo="videoInfo" />
+            <comments :videoId="videoId" v-if="myWidth > 960" />
+          </div>
+          <div class="column col-lg-12 col-2 customMargin">
+            <recommended :videoInfo="videoInfo" />
+          </div>
+          <div class="column col-12">
+            <comments :videoId="videoId" v-if="myWidth <= 960" />
+          </div>
         </div>
       </div>
     </div>
@@ -83,7 +85,7 @@ export default {
     },
     getVideo() {
       axios({
-        url: "https://invidiou.site/api/v1/videos/" + this.videoId,
+        url: "https://invidious.fdn.fr/api/v1/videos/" + this.videoId,
         timeout: 10000,
       })
         .then((response) => {
@@ -139,5 +141,9 @@ export default {
   .customMargin {
     padding-left: 50px;
   }
+}
+#content {
+  display: flex;
+  justify-content: center;
 }
 </style>

@@ -159,7 +159,7 @@ export default {
       this.getChannelVideos();
     },
     getChannelData() {
-      var url = "https://invidiou.site/api/v1/channels/" + this.id;
+      var url = "https://invidious.fdn.fr/api/v1/channels/" + this.id;
       axios({
         url: url,
         timeout: 10000,
@@ -189,7 +189,7 @@ export default {
     },
     getChannelVideos() {
       var url =
-        "https://invidiou.site/api/v1/channels/videos/" +
+        "https://invidious.fdn.fr/api/v1/channels/videos/" +
         this.id +
         "?page=" +
         this.page;

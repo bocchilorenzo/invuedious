@@ -77,7 +77,7 @@ export default {
     getComments() {
       axios({
         url:
-          "https://invidiou.site/api/v1/comments/" +
+          "https://invidious.fdn.fr/api/v1/comments/" +
           this.videoId +
           "?continuation=" +
           this.continuation,

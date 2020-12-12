@@ -4,17 +4,19 @@
       <section class="navbar-section">
         <router-link
           :to="{
-                    name: 'popular',
-                }"
+            name: 'popular',
+          }"
           class="navbar-brand mr-2"
         >
           <unicon name="youtube" fill="black" id="barLogo" />INVUEDIOUS
         </router-link>
       </section>
+      <section class="navbar-center">
+        <searchbar />
+      </section>
+      <section class="navbar-section" id="emptySec">
+      </section>
     </header>
-    <div class="container">
-      <searchbar />
-    </div>
     <router-view :key="this.$route.path" />
   </div>
 </template>
@@ -24,8 +26,8 @@ import searchbar from "./components/searchbar.vue";
 export default {
   methods: {},
   components: {
-    searchbar
-  }
+    searchbar,
+  },
 };
 </script>
 

@@ -105,14 +105,14 @@ export default {
     getVideoData() {
       var url = "";
       if (this.$route.name == "popular") {
-        url = "https://invidiou.site/api/v1/popular";
+        url = "https://invidious.fdn.fr/api/v1/popular";
       } else {
         /*
       else if(this.$route.name == "top"){
-        url = "https://invidiou.site/api/v1/top"
+        url = "https://invidious.fdn.fr/api/v1/top"
       }
       */
-        url = "https://invidiou.site/api/v1/trending";
+        url = "https://invidious.fdn.fr/api/v1/trending";
       }
       axios({
         url: url,
