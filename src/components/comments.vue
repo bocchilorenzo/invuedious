@@ -4,7 +4,12 @@
     <div v-if="failed">
       <div class="empty">
         <div class="empty-icon">
-          <unicon name="sad-dizzy" fill="var(--primary)" width="50px" height="50px" />
+          <unicon
+            name="sad-dizzy"
+            fill="var(--primary)"
+            width="50px"
+            height="50px"
+          />
         </div>
         <p class="empty-title h5">Connection error</p>
         <p class="empty-subtitle">
@@ -17,10 +22,15 @@
       </div>
     </div>
     <div v-else>
-      <p>{{commentCount}} Comments:</p>
+      <p>{{ commentCount }} Comments:</p>
       <div class="panel">
         <div class="panel-body">
-          <commentCard v-for="comment in comments" :key="comment.commentId" :commentData="comment" :videoId="videoId" />
+          <commentCard
+            v-for="comment in comments"
+            :key="comment.commentId"
+            :commentData="comment"
+            :videoId="videoId"
+          />
         </div>
       </div>
       <div class="loading loading-lg bottomLoader"></div>
@@ -30,15 +40,15 @@
 
 <script>
 import axios from "axios";
-import commentCard from './commentCard.vue'
+import commentCard from "./commentCard.vue";
 
 export default {
   name: "comments",
   props: {
-    videoId: String
+    videoId: String,
   },
-  components:{
-    commentCard
+  components: {
+    commentCard,
   },
   data() {
     return {
@@ -47,7 +57,7 @@ export default {
       continuation: "",
       loading: true,
       bottom: false,
-      failed: false
+      failed: false,
     };
   },
   created() {
@@ -77,13 +87,14 @@ export default {
     getComments() {
       axios({
         url:
-          "https://invidious.fdn.fr/api/v1/comments/" +
+          localStorage.getItem("selected") +
+          "/api/v1/comments/" +
           this.videoId +
           "?continuation=" +
           this.continuation,
-        timeout: 10000
+        timeout: 10000,
       })
-        .then(response => {
+        .then((response) => {
           var tmpObj = {};
           this.commentCount = response.data.commentCount;
           for (let i = 0; i < response.data.comments.length; i++) {
@@ -92,20 +103,20 @@ export default {
           }
           this.continuation = response.data.continuation;
         })
-        .catch(error => {
+        .catch((error) => {
           this.failed = true;
           console.log(error);
         })
         .then(() => (this.loading = false));
-    }
+    },
   },
   watch: {
     bottom(bottom) {
       if (bottom && !this.loading) {
         this.getComments();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

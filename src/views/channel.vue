@@ -13,7 +13,7 @@
         </div>
         <p class="empty-title h5">Connection error</p>
         <p class="empty-subtitle">
-          The request to indvidio.us servers took too long, or the channel
+          The request to the indvidious instance took too long, or the channel
           doesn't exist.
           <br />Check your connection and try again.
         </p>
@@ -132,6 +132,9 @@ export default {
       failed: false,
     };
   },
+  props: {
+    reload: Boolean,
+  },
   components: {
     cardContainer,
     roundedCardContainer,
@@ -159,7 +162,8 @@ export default {
       this.getChannelVideos();
     },
     getChannelData() {
-      var url = "https://invidious.fdn.fr/api/v1/channels/" + this.id;
+      var url =
+        localStorage.getItem("selected") + "/api/v1/channels/" + this.id;
       axios({
         url: url,
         timeout: 10000,
@@ -189,7 +193,8 @@ export default {
     },
     getChannelVideos() {
       var url =
-        "https://invidious.fdn.fr/api/v1/channels/videos/" +
+        localStorage.getItem("selected") +
+        "/api/v1/channels/videos/" +
         this.id +
         "?page=" +
         this.page;
@@ -299,6 +304,11 @@ export default {
         if (this.mode == "videos") {
           this.getChannelVideos();
         }
+      }
+    },
+    reload() {
+      if (this.reload) {
+        this.reconnect();
       }
     },
   },

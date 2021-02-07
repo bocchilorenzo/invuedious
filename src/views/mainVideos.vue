@@ -42,7 +42,7 @@
             </div>
             <p class="empty-title h5">Connection error</p>
             <p class="empty-subtitle">
-              The request to indvidio.us servers took too long.
+              The request to the indvidious instance took too long.
               <br />Check your connection and try again.
             </p>
             <div class="empty-action">
@@ -82,6 +82,9 @@ export default {
   components: {
     cardContainer,
   },
+  props: {
+    reload: Boolean,
+  },
   data() {
     return {
       videoArray: [],
@@ -105,14 +108,14 @@ export default {
     getVideoData() {
       var url = "";
       if (this.$route.name == "popular") {
-        url = "https://invidious.fdn.fr/api/v1/popular";
+        url = localStorage.getItem("selected") + "/api/v1/popular";
       } else {
         /*
       else if(this.$route.name == "top"){
         url = "https://invidious.fdn.fr/api/v1/top"
       }
       */
-        url = "https://invidious.fdn.fr/api/v1/trending";
+        url = localStorage.getItem("selected") + "/api/v1/trending";
       }
       axios({
         url: url,
@@ -141,7 +144,7 @@ export default {
           }
         })
         .catch(() => {
-          this.getVideoData();
+          this.failed = true;
         })
         .then(() => (this.loading = false));
     },
@@ -161,8 +164,17 @@ export default {
       }
     },
   },
+  watch: {
+    reload() {
+      if (this.reload) {
+        this.loading = true;
+        this.failed = false;
+        this.videoArray = [];
+        this.reconnect();
+      }
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

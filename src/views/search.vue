@@ -37,7 +37,7 @@
             </div>
             <p class="empty-title h5">Connection error</p>
             <p class="empty-subtitle">
-              The request to indvidio.us servers took too long.
+              The request to the indvidious instance took too long.
               <br />Check your connection and try again.
             </p>
             <div class="empty-action">
@@ -85,6 +85,9 @@ export default {
   components: {
     cardContainer,
     roundedCardContainer,
+  },
+  props: {
+    reload: Boolean,
   },
   data() {
     return {
@@ -141,7 +144,8 @@ export default {
     },
     getVideoData() {
       var url =
-        "https://invidious.fdn.fr/api/v1/search?q=" +
+        localStorage.getItem("selected") +
+        "/api/v1/search?q=" +
         this.query +
         "&page=" +
         this.page;
@@ -189,7 +193,8 @@ export default {
     },
     getChannelsData() {
       var url =
-        "https://invidious.fdn.fr/api/v1/search?q=" +
+        localStorage.getItem("selected") +
+        "/api/v1/search?q=" +
         this.query +
         "&type=channel&page=" +
         this.page;
@@ -254,6 +259,17 @@ export default {
     },
   },
   watch: {
+    reload() {
+      if (this.reload) {
+        this.loading = true;
+        this.dataArray = [];
+        this.page = 1;
+        this.bottom = false;
+        this.failed = false;
+        this.stop = false;
+        this.reconnect();
+      }
+    },
     bottom(bottom) {
       if (bottom && !this.loading) {
         if (this.mode == "searchVideo") {
@@ -267,5 +283,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

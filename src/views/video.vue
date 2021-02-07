@@ -14,7 +14,7 @@
           </div>
           <p class="empty-title h5">Connection error</p>
           <p class="empty-subtitle">
-            The request to indvidio.us servers took too long, or the video
+            The request to the indvidious instance took too long, or the video
             doesn't exist.
             <br />Check your connection and try again.
           </p>
@@ -63,6 +63,9 @@ export default {
     recommended,
     comments,
   },
+  props: {
+    reload: Boolean,
+  },
   data() {
     return {
       videoId: this.$route.params.id,
@@ -85,7 +88,8 @@ export default {
     },
     getVideo() {
       axios({
-        url: "https://invidious.fdn.fr/api/v1/videos/" + this.videoId,
+        url:
+          localStorage.getItem("selected") + "/api/v1/videos/" + this.videoId,
         timeout: 10000,
       })
         .then((response) => {
@@ -125,6 +129,15 @@ export default {
           this.failed = true;
         })
         .then(() => (this.loading = false));
+    },
+  },
+  watch: {
+    reload() {
+      if (this.reload) {
+        this.loading = true;
+        this.videoInfo = [];
+        this.reconnect();
+      }
     },
   },
 };

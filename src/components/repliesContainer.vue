@@ -4,7 +4,12 @@
     <div v-if="failed">
       <div class="empty">
         <div class="empty-icon">
-          <unicon name="sad-dizzy" fill="var(--primary)" width="40px" height="40px" />
+          <unicon
+            name="sad-dizzy"
+            fill="var(--primary)"
+            width="40px"
+            height="40px"
+          />
         </div>
         <p class="empty-title h5">Connection error</p>
         <p class="empty-subtitle">
@@ -27,11 +32,15 @@
           />
         </div>
       </div>
-      <div class="centered" v-if="continuation != undefined"><button class="btn" @click="getReplies()">SHOW MORE</button></div>
+      <div class="centered" v-if="continuation != undefined">
+        <button class="btn" @click="getReplies()">SHOW MORE</button>
+      </div>
       <div v-if="failed2" class="empty">
         <p class="empty-title h5">Connection error</p>
         <div class="empty-action">
-          <button class="btn btn-primary" @click="innerReconnect()">RETRY</button>
+          <button class="btn btn-primary" @click="innerReconnect()">
+            RETRY
+          </button>
         </div>
       </div>
       <div v-if="innerLoading" class="loading loading-lg"></div>
@@ -46,10 +55,10 @@ export default {
   name: "repliesContainer",
   props: {
     videoId: String,
-    initialContinuation: String
+    initialContinuation: String,
   },
   components: {
-    replyCard
+    replyCard,
   },
   created() {
     this.getReplies();
@@ -62,7 +71,7 @@ export default {
       continuation: "",
       begin: true,
       innerLoading: false,
-      failed2: false
+      failed2: false,
     };
   },
   methods: {
@@ -79,7 +88,10 @@ export default {
     getReplies() {
       this.innerLoading = true;
       var url =
-        "https://invidious.fdn.fr/api/v1/comments/" + this.videoId + "?continuation=";
+        localStorage.getItem("selected") +
+        "/api/v1/comments/" +
+        this.videoId +
+        "?continuation=";
       if (this.begin) {
         url += this.initialContinuation;
       } else {
@@ -87,9 +99,9 @@ export default {
       }
       axios({
         url: url,
-        timeout: 10000
+        timeout: 10000,
       })
-        .then(response => {
+        .then((response) => {
           this.begin = false;
           var tmpObj = {};
           for (let i = 0; i < response.data.comments.length; i++) {
@@ -98,7 +110,7 @@ export default {
           }
           this.continuation = response.data.continuation;
         })
-        .catch(error => {
+        .catch((error) => {
           if (this.begin) {
             this.failed = true;
           } else {
@@ -108,8 +120,8 @@ export default {
         })
         .then(() => (this.innerLoading = false))
         .then(() => (this.loading = false));
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -123,6 +135,6 @@ export default {
   color: var(--secondary) !important;
 }
 .btn:hover {
-  color: white!important;
+  color: white !important;
 }
 </style>
