@@ -55,7 +55,16 @@ export default {
         document.documentElement.style.setProperty("--primary", "#00abff");
         document.documentElement.style.setProperty("--secondary", "#64ccff");
         document.documentElement.style.setProperty("--bg-dark", "#181d2f");
-        document.body.setAttribute("background-color", "#232d48");
+        document.body.style.setProperty(
+          "background-color",
+          "#232d48",
+          "important"
+        );
+      } else {
+        document.documentElement.style.setProperty("--primary", "#c3073f");
+        document.documentElement.style.setProperty("--secondary", "#da5973");
+        document.documentElement.style.setProperty("--bg-dark", "#131313");
+        document.body.style.setProperty("background-color", "");
       }
     },
   },
