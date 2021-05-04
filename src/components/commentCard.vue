@@ -32,7 +32,7 @@
           </router-link>
           <div class="card-subtitle text-gray">
             <span>Published: {{commentData.publishedText}}</span>
-            <span v-if="commentData.isEdited">(Edited)</span>
+            <span v-if="commentData.isEdited">&nbsp;(Edited)</span>
           </div>
         </div>
         <div class="card-body">

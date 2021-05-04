@@ -89,7 +89,7 @@ export default {
           localStorage.getItem("selected") == null ||
           localStorage.getItem("selected") == ""
         ) {
-          localStorage.setItem("selected", "https://invidious.exonip.de");
+          localStorage.setItem("selected", "https://vid.puffyan.us");
         }
         this.$store.state.apis = instances;
         this.ready = true;
