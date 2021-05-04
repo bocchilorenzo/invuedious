@@ -3,7 +3,7 @@
     <modalSettings
       v-if="settings"
       @close="settings = !settings"
-      @save="updateInstance"
+      @save="updateData"
     />
     <header class="navbar">
       <section class="navbar-section">
@@ -21,7 +21,12 @@
       </section>
       <section class="navbar-section" id="settingsBtn">
         <button
-          style="background:transparent; border:none; outline:none; cursor:pointer;"
+          style="
+            background: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+          "
           @click="settings = !settings"
         >
           <unicon name="setting" fill="black" />
@@ -38,10 +43,20 @@ import modalSettings from "./components/modalSettings.vue";
 import axios from "axios";
 export default {
   methods: {
-    updateInstance(inst) {
-      localStorage.setItem("selected", inst);
+    updateData(arr) {
+      localStorage.setItem("selected", arr[0]);
+      localStorage.setItem("theme", arr[1]);
+      this.setColors();
       this.settings = false;
       this.reload = true;
+    },
+    setColors() {
+      if (localStorage.getItem("theme") == "blue") {
+        document.documentElement.style.setProperty("--primary", "#00abff");
+        document.documentElement.style.setProperty("--secondary", "#64ccff");
+        document.documentElement.style.setProperty("--bg-dark", "#181d2f");
+        document.body.setAttribute("background-color", "#232d48");
+      }
     },
   },
   components: {
@@ -56,6 +71,7 @@ export default {
     };
   },
   created() {
+    this.setColors();
     axios({
       method: "get",
       url:
@@ -64,7 +80,7 @@ export default {
       .then((res) => {
         let instances = [];
         for (let i = 0; i < res.data.length; i++) {
-          if (res.data[i][1].type != "onion") {
+          if (res.data[i][1].type != "onion" && res.data[i][1].type != "i2p") {
             instances.push(res.data[i]);
           }
         }
@@ -73,7 +89,7 @@ export default {
           localStorage.getItem("selected") == null ||
           localStorage.getItem("selected") == ""
         ) {
-          localStorage.setItem("selected", "https://ytprivate.com");
+          localStorage.setItem("selected", "https://invidious.exonip.de");
         }
         this.$store.state.apis = instances;
         this.ready = true;
