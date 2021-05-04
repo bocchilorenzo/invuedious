@@ -30,4 +30,15 @@ export default {
 h5 {
   color: darkgray;
 }
+@media (min-width: 961px) {
+  .col-12 {
+    padding: 0;
+  }
+}
+.columns .col-12 .card .card-header {
+  padding: 0.5rem 0.5rem 0 !important;
+}
+.columns .col-12 .card .card-body {
+  padding: 0.5rem !important;
+}
 </style>

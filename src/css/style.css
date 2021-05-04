@@ -120,13 +120,6 @@ a {
   color: darkgray;
 }
 
-@media screen and (max-width: 480px) {
-  .card {
-    max-width: 320px !important;
-    margin   : 0 auto 1em !important;
-  }
-}
-
 a:hover {
   text-decoration: none !important;
 }
@@ -210,4 +203,8 @@ a:hover {
   text-overflow: ellipsis;
   overflow     : hidden;
   width        : 100%;
+}
+
+.panel-body {
+  padding: 0 !important;
 }

@@ -153,6 +153,7 @@ export default {
 @media (min-width: 961px) {
   .customMargin {
     padding-left: 50px;
+    box-sizing: content-box;
   }
 }
 #content {

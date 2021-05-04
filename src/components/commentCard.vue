@@ -157,7 +157,7 @@ export default {
   display: flex !important;
   align-items: center;
   border-radius: 0.5em;
-  padding: 0 0.5em !important;
+  padding: 0 !important;
 }
 .accordion-header p {
   line-height: 24px;
