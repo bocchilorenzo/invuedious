@@ -66,7 +66,7 @@ export default {
     };
   },
   created() {
-    this.instance = localStorage.getItem("selected");
+    this.instance = this.$store.state.selected;
     this.theme = localStorage.getItem("theme");
     if (this.theme == undefined) {
       this.theme = "red";

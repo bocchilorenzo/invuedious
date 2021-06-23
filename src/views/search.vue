@@ -144,7 +144,7 @@ export default {
     },
     getVideoData() {
       var url =
-        localStorage.getItem("selected") +
+        this.$store.state.selected +
         "/api/v1/search?q=" +
         this.query +
         "&page=" +
@@ -193,7 +193,7 @@ export default {
     },
     getChannelsData() {
       var url =
-        localStorage.getItem("selected") +
+        this.$store.state.selected +
         "/api/v1/search?q=" +
         this.query +
         "&type=channel&page=" +

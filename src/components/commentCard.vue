@@ -5,45 +5,56 @@
         <div class="card-header">
           <router-link
             :to="{
-                    name: 'channel',
-                    params: { id: commentData.authorId }
-                }"
+              name: 'channel',
+              params: { id: commentData.authorId },
+            }"
           >
-            <div v-if="commentData.authorIsChannelOwner" class="card-title h6 owner">
+            <div
+              v-if="commentData.authorIsChannelOwner"
+              class="card-title h6 owner"
+            >
               <figure
                 class="avatar avatar-lg"
                 :data-initial="commentData.author.charAt(0)"
-                style="background-color: #5755d9;"
+                style="background-color: #5755d9"
               >
-                <img :src="commentData.authorThumbnails[0].url" name="profile picture" />
+                <img
+                  :src="commentData.authorThumbnails[0].url"
+                  name="profile picture"
+                />
               </figure>
-              {{commentData.author}}
+              {{ commentData.author }}
             </div>
             <div class="card-title h6" v-else>
               <figure
                 class="avatar avatar-lg"
                 :data-initial="commentData.author.charAt(0)"
-                style="background-color: #5755d9;"
+                style="background-color: #5755d9"
               >
-                <img :src="commentData.authorThumbnails[0].url" name="profile picture" />
+                <img
+                  :src="commentData.authorThumbnails[0].url"
+                  name="profile picture"
+                />
               </figure>
-              {{commentData.author}}
+              {{ commentData.author }}
             </div>
           </router-link>
-          <div class="card-subtitle text-gray">
-            <span>Published: {{commentData.publishedText}}</span>
+          <span class="text-gray">
+            <span>{{ commentData.publishedText }}</span>
             <span v-if="commentData.isEdited">&nbsp;(Edited)</span>
-          </div>
+          </span>
         </div>
         <div class="card-body">
-          <div v-html="commentData.contentHtml"></div>
-          <br />
-          <unicon name="thumbs-up" fill="var(--primary)" />
-          {{commentData.likeCount}}
-          <span
-            v-if="commentData.creatorHeart != null"
-            class="creatorHeart"
-          >
+          <div
+            v-html="commentData.contentHtml"
+            style="margin-bottom: 0.8rem"
+            class="text-light"
+          ></div>
+          <span class="like">
+            <unicon name="thumbs-up" fill="var(--primary)" />
+            <span>{{ commentData.likeCount }}</span>
+          </span>
+          <span v-if="commentData.creatorHeart != null" class="creatorHeart">
             <figure
               class="avatar avatar-md"
               :data-initial="commentData.creatorHeart.creatorName.charAt(0)"
@@ -66,15 +77,17 @@
           <div class="accordion">
             <input
               type="checkbox"
-              :id="'accordion-'+commentData.commentId"
+              :id="'accordion-' + commentData.commentId"
               name="accordion-checkbox"
               hidden
             />
-            <label class="accordion-header" :for="'accordion-'+commentData.commentId">
-              <button
-                class="btn"
-                @click="switchText()"
-              >{{accordionText}} {{commentData.replies.replyCount}} replies</button>
+            <label
+              class="accordion-header"
+              :for="'accordion-' + commentData.commentId"
+            >
+              <button class="btn" @click="switchText()">
+                {{ accordionText }} {{ commentData.replies.replyCount }} replies
+              </button>
             </label>
             <div class="accordion-body" v-if="showBody">
               <repliesContainer
@@ -95,15 +108,15 @@ export default {
   name: "commentCard",
   props: {
     commentData: Object,
-    videoId: String
+    videoId: String,
   },
   components: {
-    repliesContainer
+    repliesContainer,
   },
   data() {
     return {
       accordionText: "Show",
-      showBody: false
+      showBody: false,
     };
   },
   methods: {
@@ -115,8 +128,8 @@ export default {
         this.accordionText = "Show";
         this.showBody = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -174,6 +187,24 @@ export default {
   color: var(--secondary) !important;
 }
 .btn:hover {
-  color: white!important;
+  color: white !important;
+}
+.like {
+  display: flex;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+}
+.like :first-child {
+  margin-right: 3px;
+}
+.card-header {
+  display: flex;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+}
+.card-header :first-child {
+  margin-right: 3px;
 }
 </style>

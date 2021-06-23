@@ -45,13 +45,14 @@ export default {
   methods: {
     updateData(arr) {
       localStorage.setItem("selected", arr[0]);
+      this.$store.state.selected = arr[0];
       localStorage.setItem("theme", arr[1]);
       this.setColors();
       this.settings = false;
       this.reload = true;
     },
     setColors() {
-      if (localStorage.getItem("theme") == "blue") {
+      if (localStorage.getItem("theme") && localStorage.getItem("theme") == "blue") {
         document.documentElement.style.setProperty("--primary", "#00abff");
         document.documentElement.style.setProperty("--secondary", "#64ccff");
         document.documentElement.style.setProperty("--bg-dark", "#181d2f");
@@ -83,8 +84,7 @@ export default {
     this.setColors();
     axios({
       method: "get",
-      url:
-        "https://api.invidious.io/instances.json?pretty=1&sort_by=type,users",
+      url: "https://api.invidious.io/instances.json?pretty=1&sort_by=type,users",
     })
       .then((res) => {
         let instances = [];
@@ -99,6 +99,9 @@ export default {
           localStorage.getItem("selected") == ""
         ) {
           localStorage.setItem("selected", "https://vid.puffyan.us");
+          this.$store.state.selected = "https://vid.puffyan.us";
+        } else {
+          this.$store.state.selected = localStorage.getItem("selected");
         }
         this.$store.state.apis = instances;
         this.ready = true;

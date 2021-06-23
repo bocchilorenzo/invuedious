@@ -22,7 +22,7 @@
       </div>
     </div>
     <div v-else>
-      <p>{{ commentCount }} Comments:</p>
+      <p style="margin-bottom:.4rem">{{ commentCount }} Comments:</p>
       <div class="panel">
         <div class="panel-body">
           <commentCard
@@ -87,7 +87,7 @@ export default {
     getComments() {
       axios({
         url:
-          localStorage.getItem("selected") +
+          this.$store.state.selected +
           "/api/v1/comments/" +
           this.videoId +
           "?continuation=" +

@@ -4,18 +4,19 @@
       <b>{{ videoInfo[0].title }}</b>
     </h4>
     <div id="infoSmall">
-      <div>
-        <p>Views: {{ videoInfo[0].formattedViews }}</p>
-        <p>Published: {{ videoInfo[0].publishedText }}</p>
+      <div class="infoLeft">
+        <p>{{ numberWithDots(videoInfo[0].viewCount) }} views</p>
+        <span class="dot">•</span>
+        <p>{{ videoInfo[0].publishedText }}</p>
       </div>
-      <div>
-        <p>
+      <div id="voteContainer">
+        <p class="vote">
           <unicon name="thumbs-up" fill="var(--primary)" />
-          Likes: {{ videoInfo[0].likeCount }}
+          <span>{{ videoInfo[0].likeCount }}</span>
         </p>
-        <p>
+        <p class="vote">
           <unicon name="thumbs-down" fill="var(--primary)" />
-          Dislikes: {{ videoInfo[0].dislikeCount }}
+          <span>{{ videoInfo[0].dislikeCount }}</span>
         </p>
       </div>
     </div>
@@ -39,7 +40,10 @@
               name="Channel image"
             />
           </figure>
-          <span id="authorName">{{ videoInfo[0].author }}</span>
+          <span class="authorDetails">
+            <span id="authorName">{{ videoInfo[0].author }}</span>
+            <span>({{ videoInfo[0].subCountText }} subscribers)</span>
+          </span>
         </div>
       </router-link>
       <div class="accordion">
@@ -80,6 +84,9 @@ export default {
     descriptionIcon() {
       this.open = !this.open;
     },
+    numberWithDots(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
   },
 };
 </script>
@@ -99,26 +106,19 @@ export default {
 }
 .accordion-header {
   display: flex !important;
-  align-items: center;
-  border-radius: 0.5em;
-  padding: 0 0.5em !important;
+  align-content: center !important;
+  justify-items: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  cursor: pointer;
 }
 .accordion-header p {
   line-height: 24px;
   margin: 0;
 }
 #authorName {
-  color: var(--primary);
-}
-.accordion-header:hover {
-  background-color: var(--bg-dark);
-}
-#authorName {
   font-size: 1.1rem;
-  padding-left: 0.5em;
-}
-.accordion-body {
-  padding-top: 1em;
+  color: var(--primary);
 }
 p,
 span {
@@ -135,9 +135,41 @@ p {
 }
 .authorInfo {
   margin: 1em 0 0.5em;
-  padding: 0 0.5em;
+  display: flex;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
 }
 .divider {
   border-top: 0.05rem solid #727272;
+}
+.vote,
+#voteContainer,
+.infoLeft {
+  display: flex;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+}
+.infoLeft {
+  margin-right: 20px;
+}
+.authorDetails {
+  display: flex;
+  align-content: center;
+  justify-items: center;
+  align-items: flex-start;
+  width: max-content;
+  flex-direction: column;
+  padding-left: 0.5em;
+}
+.vote :first-child {
+  margin-right: 3px;
+}
+#voteContainer {
+  column-gap: 20px;
+}
+.dot {
+  margin: 0 4px;
 }
 </style>

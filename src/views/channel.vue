@@ -163,7 +163,7 @@ export default {
     },
     getChannelData() {
       var url =
-        localStorage.getItem("selected") + "/api/v1/channels/" + this.id;
+        this.$store.state.selected + "/api/v1/channels/" + this.id;
       axios({
         url: url,
         timeout: 10000,
@@ -193,7 +193,7 @@ export default {
     },
     getChannelVideos() {
       var url =
-        localStorage.getItem("selected") +
+        this.$store.state.selected +
         "/api/v1/channels/videos/" +
         this.id +
         "?page=" +

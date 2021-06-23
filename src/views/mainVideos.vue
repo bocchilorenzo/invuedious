@@ -108,14 +108,14 @@ export default {
     getVideoData() {
       var url = "";
       if (this.$route.name == "popular") {
-        url = localStorage.getItem("selected") + "/api/v1/popular";
+        url = this.$store.state.selected + "/api/v1/popular";
       } else {
         /*
       else if(this.$route.name == "top"){
         url = "https://invidious.fdn.fr/api/v1/top"
       }
       */
-        url = localStorage.getItem("selected") + "/api/v1/trending";
+        url = this.$store.state.selected + "/api/v1/trending";
       }
       axios({
         url: url,

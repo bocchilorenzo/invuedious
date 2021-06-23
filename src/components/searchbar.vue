@@ -28,8 +28,6 @@ export default {
           name: "searchVideo",
           params: { q: query },
         });
-      } else {
-        console.log("Query non valida o campo vuoto. Riprova");
       }
     },
   },

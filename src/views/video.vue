@@ -88,25 +88,22 @@ export default {
     },
     getVideo() {
       axios({
-        url:
-          localStorage.getItem("selected") + "/api/v1/videos/" + this.videoId,
+        url: this.$store.state.selected + "/api/v1/videos/" + this.videoId,
         timeout: 10000,
       })
         .then((response) => {
           this.videoInfo.push(response.data);
           document.title = this.videoInfo[0].title + " - Invuedious";
-          this.videoInfo[0].thumb = this.videoInfo[0].videoThumbnails[2].url;
+          this.videoInfo[0].thumb = this.videoInfo[0].videoThumbnails[0].url;
           for (let i = 0; i < this.videoInfo[0].formatStreams.length; i++) {
-            this.videoInfo[0].formatStreams[
-              i
-            ].qualityLabel = this.videoInfo[0].formatStreams[
-              i
-            ].qualityLabel.substring(
-              0,
-              this.videoInfo[0].formatStreams[i].qualityLabel.length - 1
-            );
+            this.videoInfo[0].formatStreams[i].qualityLabel =
+              this.videoInfo[0].formatStreams[i].qualityLabel.substring(
+                0,
+                this.videoInfo[0].formatStreams[i].qualityLabel.length - 1
+              );
             if (this.videoInfo[0].formatStreams[i].qualityLabel == "720") {
-              this.videoInfo[0].thumb = this.videoInfo[0].videoThumbnails[1].url;
+              this.videoInfo[0].thumb =
+                this.videoInfo[0].videoThumbnails[1].url;
             }
           }
           this.videoInfo[0].formattedViews = numeral(
@@ -129,6 +126,27 @@ export default {
           this.failed = true;
         })
         .then(() => (this.loading = false));
+      //.then(() => this.downloadCaptions());
+    },
+    async downloadCaptions() {
+      this.videoInfo[0].downloadedCaptions = [];
+      for (let i = 0; i < this.videoInfo[0].captions.length; i++) {
+        await axios(
+          this.$store.state.selected + this.videoInfo[0].captions[i].url
+        )
+          .then((res) => {
+            this.videoInfo[0].downloadedCaptions.push({
+              src: res.data,
+              url: this.videoInfo[0].captions[i].url,
+              label: this.videoInfo[0].captions[i].label,
+              languageCode: this.videoInfo[0].captions[i].languageCode,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      this.loading = false;
     },
   },
   watch: {

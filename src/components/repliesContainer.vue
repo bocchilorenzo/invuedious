@@ -88,7 +88,7 @@ export default {
     getReplies() {
       this.innerLoading = true;
       var url =
-        localStorage.getItem("selected") +
+        this.$store.state.selected +
         "/api/v1/comments/" +
         this.videoId +
         "?continuation=";
