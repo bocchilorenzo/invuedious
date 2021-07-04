@@ -42,7 +42,7 @@
           </figure>
           <span class="authorDetails">
             <span id="authorName">{{ videoInfo[0].author }}</span>
-            <span>({{ videoInfo[0].subCountText }} subscribers)</span>
+            <span>{{ videoInfo[0].subCountText }} subscribers</span>
           </span>
         </div>
       </router-link>

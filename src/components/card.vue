@@ -22,7 +22,7 @@
           params: { id: video.videoId },
         }"
       >
-        <div class="card-title h6">{{ video.title }}</div>
+        <div class="card-title h6" :title="video.title">{{ video.title }}</div>
       </router-link>
 
       <router-link

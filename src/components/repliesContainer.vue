@@ -103,10 +103,8 @@ export default {
       })
         .then((response) => {
           this.begin = false;
-          var tmpObj = {};
           for (let i = 0; i < response.data.comments.length; i++) {
-            tmpObj = response.data.comments[i];
-            this.replies.push(tmpObj);
+            this.replies.push(response.data.comments[i]);
           }
           this.continuation = response.data.continuation;
         })

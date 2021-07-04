@@ -179,7 +179,7 @@ export default {
 .accordion-body {
   padding-top: 0.5em;
   margin-bottom: 0 !important;
-  max-height: fit-content !important;
+  max-height: 100% !important;
 }
 .btn {
   background-color: transparent !important;
