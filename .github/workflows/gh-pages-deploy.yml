@@ -1,2 +1,17 @@
-- name: GitHub Pages action
-  uses: peaceiris/actions-gh-pages@v3.7.3
+name: Deploy to github pages
+on: [push]
+jobs:
+  build_vue:
+    runs-on: ubuntu-latest
+    name: Deploy to github pages
+    steps:
+    - uses: actions/checkout@v2
+    - id: Deploy-to-github-pages
+      uses: xRealNeon/VuePagesAction@1.0.0
+      with:
+        username: 'bocchilorenzo'
+        reponame: 'invuedious'
+        token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        VUE_APP_KEY: ${{ secrets.VUE_APP_KEY }}
+        VUE_APP_URL: ${{ secrets.VUE_APP_URL }}
