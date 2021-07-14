@@ -50,28 +50,30 @@
             style="margin-bottom: 0.8rem"
             class="text-light"
           ></div>
-          <span class="like">
-            <unicon name="thumbs-up" fill="var(--primary)" />
-            <span>{{ commentData.likeCount }}</span>
-          </span>
-          <span v-if="commentData.creatorHeart != null" class="creatorHeart">
-            <figure
-              class="avatar avatar-md"
-              :data-initial="commentData.creatorHeart.creatorName.charAt(0)"
-            >
-              <img
-                :src="commentData.creatorHeart.creatorThumbnail"
-                :alt="commentData.creatorHeart.creatorName"
+          <div style="display:flex">
+            <span class="like">
+              <unicon name="thumbs-up" fill="var(--primary)" />
+              <span>{{ commentData.likeCount }}</span>
+            </span>
+            <span v-if="commentData.creatorHeart != null" class="creatorHeart">
+              <figure
+                class="avatar avatar-md"
+                :data-initial="commentData.creatorHeart.creatorName.charAt(0)"
+              >
+                <img
+                  :src="commentData.creatorHeart.creatorThumbnail"
+                  :alt="commentData.creatorHeart.creatorName"
+                />
+              </figure>
+              <unicon
+                name="heart"
+                width="15"
+                height="15"
+                class="creatorHeartIcon"
+                fill="var(--primary)"
               />
-            </figure>
-            <unicon
-              name="heart"
-              width="15"
-              height="15"
-              class="creatorHeartIcon"
-              fill="var(--primary)"
-            />
-          </span>
+            </span>
+          </div>
         </div>
         <div v-if="commentData.replies != undefined" class="card-footer">
           <div class="accordion">

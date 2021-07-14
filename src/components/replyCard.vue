@@ -5,61 +5,75 @@
         <div class="card-header">
           <router-link
             :to="{
-                    name: 'channel',
-                    params: { id: commentData.authorId }
-                }"
+              name: 'channel',
+              params: { id: commentData.authorId },
+            }"
           >
-            <div v-if="commentData.authorIsChannelOwner" class="card-title h6 owner">
+            <div
+              v-if="commentData.authorIsChannelOwner"
+              class="card-title h6 owner"
+            >
               <figure
                 class="avatar avatar-lg"
                 :data-initial="commentData.author.charAt(0)"
-                style="background-color: #5755d9;"
+                style="background-color: #5755d9"
               >
-                <img :src="commentData.authorThumbnails[0].url" name="profile picture" />
+                <img
+                  :src="commentData.authorThumbnails[0].url"
+                  name="profile picture"
+                />
               </figure>
-              {{commentData.author}}
+              {{ commentData.author }}
             </div>
             <div class="card-title h6" v-else>
               <figure
                 class="avatar avatar-lg"
                 :data-initial="commentData.author.charAt(0)"
-                style="background-color: #5755d9;"
+                style="background-color: #5755d9"
               >
-                <img :src="commentData.authorThumbnails[0].url" name="profile picture" />
+                <img
+                  :src="commentData.authorThumbnails[0].url"
+                  name="profile picture"
+                />
               </figure>
-              {{commentData.author}}
+              {{ commentData.author }}
             </div>
           </router-link>
-          <div class="card-subtitle text-gray">
-            <span>Published: {{commentData.publishedText}}</span>
+          <span class="text-gray">
+            <span>{{ commentData.publishedText }}</span>
             <span v-if="commentData.isEdited">&nbsp;(Edited)</span>
-          </div>
+          </span>
         </div>
         <div class="card-body">
-          <div>{{commentData.content}}</div>
-          <unicon name="thumbs-up" fill="var(--primary)" />
-          {{commentData.likeCount}}
-          <span
-            v-if="commentData.creatorHeart != null"
-            class="creatorHeart"
-          >
-            <figure
-              class="avatar avatar-md"
-              :data-initial="commentData.creatorHeart.creatorName.charAt(0)"
-            >
-              <img
-                :src="commentData.creatorHeart.creatorThumbnail"
-                :alt="commentData.creatorHeart.creatorName"
+          <div
+            v-html="commentData.contentHtml"
+            style="margin-bottom: 0.8rem"
+            class="text-light"
+          ></div>
+          <div style="display: flex">
+            <span class="like">
+              <unicon name="thumbs-up" fill="var(--primary)" />
+              <span>{{ commentData.likeCount }}</span>
+            </span>
+            <span v-if="commentData.creatorHeart != null" class="creatorHeart">
+              <figure
+                class="avatar avatar-md"
+                :data-initial="commentData.creatorHeart.creatorName.charAt(0)"
+              >
+                <img
+                  :src="commentData.creatorHeart.creatorThumbnail"
+                  :alt="commentData.creatorHeart.creatorName"
+                />
+              </figure>
+              <unicon
+                name="heart"
+                width="15"
+                height="15"
+                class="creatorHeartIcon"
+                fill="var(--primary)"
               />
-            </figure>
-            <unicon
-              name="heart"
-              width="15"
-              height="15"
-              class="creatorHeartIcon"
-              fill="var(--primary)"
-            />
-          </span>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -71,8 +85,8 @@ export default {
   name: "replyCard",
   props: {
     commentData: Object,
-    videoId: String
-  }
+    videoId: String,
+  },
 };
 </script>
 
@@ -101,5 +115,23 @@ export default {
   margin-left: -0.3em;
   z-index: 1;
   height: 15px !important;
+}
+.like {
+  display: flex;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+}
+.like :first-child {
+  margin-right: 3px;
+}
+.card-header {
+  display: flex;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+}
+.card-header :first-child {
+  margin-right: 3px;
 }
 </style>
