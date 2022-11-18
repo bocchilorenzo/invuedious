@@ -1,59 +1,55 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import mainPage from '../views/mainVideos.vue'
-import searchPage from '../views/search.vue'
-import videoPage from '../views/video.vue'
-import channelPage from '../views/channel.vue'
-
-Vue.use(VueRouter)
+import { createRouter, createWebHistory } from "vue-router";
+import mainPage from "../views/mainVideos.vue";
 
 const routes = [
   {
-    path: "*",
-    redirect: "/"
-  },
-  {
-    path: '/',
-    name: 'popular',
+    path: "/",
+    name: "popular",
     component: mainPage,
   },
   {
-    path: '/top',
-    name: 'top',
+    path: "/top",
+    name: "top",
     component: mainPage,
   },
   {
-    path: '/trending',
-    name: 'trending',
+    path: "/trending",
+    name: "trending",
     component: mainPage,
   },
   {
-    path: '/watch/:id',
-    name: 'video',
-    component: videoPage,
+    path: "/watch/:id",
+    name: "video",
+    component: function () {
+      return import(/* webpackChunkName: "video" */ "../views/video.vue");
+    },
   },
   {
-    path: '/search/videos/:q',
-    name: 'searchVideo',
-    component: searchPage,
+    path: "/search/videos/:q",
+    name: "searchVideo",
+    component: function () {
+      return import(/* webpackChunkName: "search" */ "../views/search.vue");
+    },
   },
   {
-    path: '/search/channels/:q',
-    name: 'searchChannel',
-    component: searchPage,
+    path: "/search/channels/:q",
+    name: "searchChannel",
+    component: function () {
+      return import(/* webpackChunkName: "search" */ "../views/search.vue");
+    },
   },
   {
-    path: '/channel/:id',
-    name: 'channel',
-    component: channelPage,
-  }
-]
+    path: "/channel/:id",
+    name: "channel",
+    component: function () {
+      return import(/* webpackChunkName: "channel" */ "../views/channel.vue");
+    },
+  },
+];
 
-const router = new VueRouter({
-  saveScrollPosition: true,
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: routes,
-})
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
+});
 
-export default router
+export default router;

@@ -1,53 +1,31 @@
 {
   "name": "invuedious",
   "version": "0.1.0",
-  "private": true,
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
-  "license": "AGPL-3.0-or-later",
   "dependencies": {
-    "@skjnldsv/vue-plyr": "^7.0.1-beta.0",
-    "axios": "^0.21.2",
-    "core-js": "^3.6.5",
+    "@skjnldsv/vue-plyr": "^7.3.0",
+    "axios": "^0.27.2",
     "numeral": "^2.0.6",
     "spectre.css": "^0.5.9",
-    "string-strip-html": "^4.5.0",
-    "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
-    "vue-unicons": "^2.1.0",
-    "vuex": "^3.6.2"
+    "string-strip-html": "^11.6.20",
+    "vue": "^3.2.13",
+    "vue-router": "^4.1.6",
+    "vue-unicons": "^3.3.1",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-eslint": "^3.1.1",
-    "@vue/cli-plugin-router": "~4.4.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "^3.5.3",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^8.7.1"
+  }
 }
