@@ -128,6 +128,7 @@ export default {
 <style scoped>
 .panel {
 	border: none !important;
+	padding: 0 30px;
 }
 .btn {
 	background-color: transparent !important;

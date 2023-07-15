@@ -54,12 +54,10 @@
 				</router-link>
 			</li>
 		</ul>
-		<div v-if="innerLoading" class="loading loading-lg"></div>
-		<div v-else>
+		<div>
 			<div class="container2" v-if="mode == 'videos'">
-				<div v-if="videoArray.length != 0">
-					<cardContainer :videoArray="videoArray" />
-					<div v-if="!stop" class="loading loading-lg"></div>
+				<div v-if="dataArray[0].latestVideos.length != 0">
+					<cardContainer :videoArray="dataArray[0].latestVideos" />
 				</div>
 				<div v-else>
 					<div class="empty">
@@ -109,7 +107,7 @@
 							}}</span>
 						</p>
 						<p>{{ dataArray[0].formattedViews }}</p>
-						<p>{{ dataArray[0].formattedSubs }}</p>
+						<p>{{ dataArray[0].formattedSubs }} subscribers</p>
 					</div>
 				</div>
 			</div>
@@ -128,14 +126,9 @@ export default {
 	data() {
 		return {
 			loading: true,
-			innerLoading: true,
 			mode: "videos",
 			dataArray: [],
-			videoArray: [],
 			id: this.$route.params.id,
-			page: 1,
-			stop: false,
-			bottom: false,
 			failed: false,
 		}
 	},
@@ -149,24 +142,14 @@ export default {
 	},
 	created() {
 		this.getChannelData()
-		this.getChannelVideos()
-		window.addEventListener("scroll", () => {
-			this.bottom = this.bottomVisible()
-		})
 	},
 	methods: {
 		reconnect() {
 			this.loading = true
-			this.innerLoading = true
 			this.mode = "videos"
 			this.dataArray = []
-			this.videoArray = []
-			this.page = 1
-			this.stop = false
-			this.bottom = false
 			this.failed = false
 			this.getChannelData()
-			this.getChannelVideos()
 		},
 		getChannelData() {
 			var url = this.$store.state.selected + "/api/v1/channels/" + this.id
@@ -203,76 +186,6 @@ export default {
 				.then(() => (this.loading = false))
 				.then(() => this.setActive(1))
 		},
-		getChannelVideos() {
-			var url =
-				this.$store.state.selected +
-				"/api/v1/channels/videos/" +
-				this.id +
-				"?page=" +
-				this.page
-			axios({
-				url: url,
-				timeout: 10000,
-			})
-				.then((response) => {
-					let tmpObj = {}
-					let tmp = false
-					this.stop = false
-					if (response.data.length < 60) {
-						this.stop = true
-					}
-					for (let i = 0; i < response.data.length; i++) {
-						tmpObj = response.data[i]
-						tmpObj.formattedViews = numeral(
-							response.data[i].viewCount
-						).format("0a")
-						if (
-							tmpObj.formattedViews.charAt(
-								tmpObj.formattedViews.length - 1
-							) == "m"
-						) {
-							var strtmp =
-								tmpObj.formattedViews.substr(
-									0,
-									tmpObj.formattedViews.length - 1
-								) + "M"
-							tmpObj.formattedViews = strtmp
-						}
-						tmpObj.formattedViews += " views"
-						tmp = this.checkDouble(
-							response.data[i].videoId,
-							"video"
-						)
-						if (tmp == false) {
-							this.videoArray.push(tmpObj)
-						}
-					}
-				})
-				.catch(() => {
-					this.failed = true
-				})
-				.then(() => (this.page += 1))
-				.then(() => (this.innerLoading = false))
-		},
-		checkDouble(id, mode) {
-			var found = false
-			for (var j = 0; j < this.dataArray.length; j++) {
-				if (this.dataArray != null) {
-					if (this.dataArray[j] != undefined) {
-						if (mode == "video") {
-							if (this.dataArray[j].videoId == id) {
-								found = true
-							}
-						} else {
-							if (this.dataArray[j].authorId == id) {
-								found = true
-							}
-						}
-					}
-				}
-			}
-			return found
-		},
 		timeConverter(tmp) {
 			var a = new Date(tmp * 1000)
 			var year = a.getFullYear()
@@ -283,13 +196,6 @@ export default {
 			var date = a.getDate() < 10 ? "0" + a.getDate() : a.getDate()
 			var time = month + "-" + date + "-" + year
 			return time
-		},
-		bottomVisible() {
-			const scrollY = window.scrollY
-			const visible = document.documentElement.clientHeight
-			const pageHeight = document.documentElement.scrollHeight - 400
-			const bottomOfPage = visible + scrollY >= pageHeight
-			return bottomOfPage || pageHeight < visible
 		},
 		setActive(tab) {
 			if (tab == 1) {
@@ -317,13 +223,6 @@ export default {
 		},
 	},
 	watch: {
-		bottom(bottom) {
-			if (bottom && !this.loading) {
-				if (this.mode == "videos") {
-					this.getChannelVideos()
-				}
-			}
-		},
 		reload() {
 			if (this.reload) {
 				this.reconnect()
@@ -336,5 +235,8 @@ export default {
 <style scoped>
 p {
 	color: var(--secondary);
+}
+#descriptionText {
+	color: white;
 }
 </style>

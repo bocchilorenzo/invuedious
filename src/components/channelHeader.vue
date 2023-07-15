@@ -140,6 +140,9 @@ export default {
 	margin-left: 1rem;
 	margin-bottom: 0;
 }
+.channelTitle {
+	font-weight: bold;
+}
 .channelSubtitle {
 	color: white;
 }

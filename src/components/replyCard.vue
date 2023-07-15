@@ -47,7 +47,6 @@
 				<div class="card-body">
 					<div
 						v-html="commentData.contentHtml"
-						style="margin-bottom: 0.8rem"
 						class="text-light"
 					></div>
 					<div style="display: flex">
@@ -105,8 +104,8 @@ export default {
 	color: yellow;
 }
 .commentCard .card {
-	margin-bottom: 0;
-	background-color: var(--bg-dark) !important;
+	margin-bottom: 10px;
+	background-color: transparent !important;
 }
 .avatar-md {
 	font-size: 0.75rem;

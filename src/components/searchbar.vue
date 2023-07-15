@@ -37,7 +37,7 @@ export default {
 <style scoped>
 .searchContainer {
 	text-align: center;
-	margin: 1rem auto;
+	margin: 15px auto;
 	width: 100%;
 }
 

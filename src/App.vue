@@ -109,14 +109,15 @@ export default {
 		this.setColors()
 		axios({
 			method: "get",
-			url: "https://api.invidious.io/instances.json?pretty=1&sort_by=type,users",
+			url: "https://api.invidious.io/instances.json?pretty=0&sort_by=type,users",
 		})
 			.then((res) => {
 				let instances = []
 				for (let i = 0; i < res.data.length; i++) {
 					if (
 						res.data[i][1].type != "onion" &&
-						res.data[i][1].type != "i2p"
+						res.data[i][1].type != "i2p" &&
+						res.data[i][1].api
 					) {
 						instances.push(res.data[i])
 					}
@@ -126,8 +127,8 @@ export default {
 					localStorage.getItem("selected") == null ||
 					localStorage.getItem("selected") == ""
 				) {
-					localStorage.setItem("selected", "https://vid.puffyan.us")
-					this.$store.state.selected = "https://vid.puffyan.us"
+					localStorage.setItem("selected", instances[0][0])
+					this.$store.state.selected = instances[0][0]
 				} else {
 					this.$store.state.selected =
 						localStorage.getItem("selected")

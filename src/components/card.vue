@@ -82,6 +82,10 @@ export default {
   border-radius: 0 1em 0 0!important;
 }
 */
+
+img{
+	border-radius: 8px 8px 0 0!important;
+}
 .card-image img {
 	width: 100%;
 }
@@ -93,5 +97,14 @@ export default {
 	border-radius: 0.3em;
 	padding: 0 5px;
 	margin: 3px;
+}
+
+.card-header{
+	padding: 0.5em 0.5em 0!important;
+}
+
+.card-body{
+	padding: 0 0.5em 0.5em!important;
+	margin: 0!important;
 }
 </style>

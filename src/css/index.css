@@ -32,6 +32,10 @@ body::-webkit-scrollbar-thumb {
   --bg-dark  : #131313;
 }
 
+.unicon{
+  line-height: 1;
+}
+
 .navbar {
   padding         : 0 16px;
   background-color: var(--primary);
@@ -102,7 +106,6 @@ a {
 .card-subtitle {
   overflow     : hidden;
   white-space  : nowrap;
-  /* Don't forget this one */
   text-overflow: ellipsis;
 }
 
@@ -110,6 +113,7 @@ a {
   background-color: var(--bg-dark) !important;
   border          : none !important;
   margin-bottom   : 1em;
+  border-radius: 8px!important;
 }
 
 .card .h6 {
@@ -118,6 +122,16 @@ a {
 
 .card-body {
   color: darkgray;
+  padding: 0!important;
+	margin: 10px 0 0 0!important;
+}
+
+.card-header {
+	padding: 0!important;
+}
+
+.card-footer{
+	padding: 0!important;
 }
 
 a:hover {

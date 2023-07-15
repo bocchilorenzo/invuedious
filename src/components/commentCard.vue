@@ -47,7 +47,6 @@
 				<div class="card-body">
 					<div
 						v-html="commentData.contentHtml"
-						style="margin-bottom: 0.8rem"
 						class="text-light"
 					></div>
 					<div style="display: flex">
@@ -160,7 +159,7 @@ export default {
 }
 .commentCard .card {
 	margin-bottom: 0;
-	background-color: var(--bg-dark) !important;
+	background-color: transparent!important;
 }
 .avatar-md {
 	font-size: 0.75rem;
@@ -192,7 +191,6 @@ export default {
 }
 .accordion-header p {
 	line-height: 24px;
-	margin: 0;
 }
 .accordion-body {
 	padding-top: 0.5em;
@@ -203,6 +201,7 @@ export default {
 	background-color: transparent !important;
 	border: none !important;
 	color: var(--secondary) !important;
+	padding: 0;
 }
 .btn:hover {
 	color: white !important;
