@@ -63,7 +63,7 @@
         <div
           v-html="videoInfo[0].descriptionHtml"
           class="accordion-body"
-          style="white-space: pre"
+          style="white-space: pre-wrap"
         ></div>
       </div>
     </div>
@@ -112,6 +112,9 @@ export default {
 .accordion-body {
   color: white;
   margin-bottom: 0;
+}
+.accordion input:checked ~ .accordion-body, .accordion[open] .accordion-body {
+  max-height: 100rem;
 }
 .accordion-header {
   display: flex !important;
