@@ -57,6 +57,8 @@ createApp(App)
       quality: { default: 720, options: [720, 360] },
       settings: ["quality", "speed", "captions", "loop"],
       captions: { active: false, language: "auto" },
+      invertTime: false,
+      tooltips: { controls: true, seek: true },
     },
     emit: ["ended"],
   })

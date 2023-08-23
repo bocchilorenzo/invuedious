@@ -19,9 +19,9 @@
 								<option
 									v-for="(inst, n) in $store.state.apis"
 									:key="n"
-									:value="inst[1].type + '://' + inst[0]"
+									:value="inst.uri"
 								>
-									{{ inst[1].type + "://" + inst[0] }}
+									{{ inst.uri }}
 								</option>
 							</select>
 						</div>

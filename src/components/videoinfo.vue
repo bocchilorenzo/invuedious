@@ -101,7 +101,7 @@ export default {
 }
 .accordion {
   background-color: var(--bg-dark) !important;
-  padding: 0.5em;
+  padding: 0.8em;
   border-radius: 8px;
   margin-bottom: 1em;
 }
@@ -113,7 +113,8 @@ export default {
   color: white;
   margin-bottom: 0;
 }
-.accordion input:checked ~ .accordion-body, .accordion[open] .accordion-body {
+.accordion input:checked ~ .accordion-body,
+.accordion[open] .accordion-body {
   max-height: 100rem;
 }
 .accordion-header {
@@ -143,9 +144,9 @@ p {
   flex-wrap: wrap;
   justify-content: space-between;
   align-content: flex-start;
+  margin: 0.5em 0;
 }
 .authorInfo {
-  margin: 0 0 0.5em;
   display: flex;
   align-content: center;
   justify-items: center;

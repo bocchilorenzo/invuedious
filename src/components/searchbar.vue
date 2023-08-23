@@ -4,7 +4,7 @@
 			v-model="inputSearch"
 			class="search"
 			type="text"
-			placeholder="Search..."
+			placeholder="Search"
 			@keydown.enter="search()"
 		/>
 	</div>
@@ -51,11 +51,11 @@ export default {
 	width: 100%;
 	max-width: 30rem;
 	margin: 0 auto;
-	height: 30px;
+	height: 40px;
 	background-color: rgb(53, 53, 53);
 	border: none;
 	color: white;
-	border-radius: 0.3em;
+	border-radius: 20px;
 	padding: 0 1em;
 	font-size: 16px;
 }

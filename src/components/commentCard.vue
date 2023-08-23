@@ -186,7 +186,7 @@ export default {
 .accordion-header {
 	display: flex !important;
 	align-items: center;
-	border-radius: 0.5em;
+	border-radius: 8px;
 	padding: 0 !important;
 }
 .accordion-header p {
