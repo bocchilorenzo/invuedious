@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@skjnldsv/vue-plyr": "^7.3.1",
-    "axios": "^0.27.2",
     "numeral": "^2.0.6",
     "spectre.css": "^0.5.9",
     "string-strip-html": "^11.6.20",

@@ -40,7 +40,7 @@
 <script>
 import searchbar from "./components/searchbar.vue";
 import modalSettings from "./components/modalSettings.vue";
-import axios from "axios";
+
 export default {
   methods: {
     updateData(arr) {
@@ -85,19 +85,24 @@ export default {
   },
   async created() {
     this.setColors();
-    await axios({
-      method: "get",
-      url: "https://api.invidious.io/instances.json?pretty=0&sort_by=type,users",
-    })
+    await fetch(
+      "https://api.invidious.io/instances.json?pretty=0&sort_by=type,users",
+      {
+        method: "get",
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
       .then((res) => {
         let instances = [];
-        for (let i = 0; i < res.data.length; i++) {
+        for (let i = 0; i < res.length; i++) {
           if (
-            res.data[i][1].type != "onion" &&
-            res.data[i][1].type != "i2p" &&
-            res.data[i][1].api
+            res[i][1].type != "onion" &&
+            res[i][1].type != "i2p" &&
+            res[i][1].api
           ) {
-            instances.push(res.data[i][1]);
+            instances.push(res[i][1]);
           }
         }
         if (

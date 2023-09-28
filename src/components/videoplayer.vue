@@ -1,12 +1,12 @@
 <template>
-  <div v-if="videoInfo[0].formatStreams.length == 0">
+  <div v-if="videoInfo.formatStreams.length == 0">
     <div class="empty">
       <div class="empty-icon">
         <unicon name="frown" fill="var(--primary)" width="50px" height="50px" />
       </div>
       <p class="empty-title h5">This video is not playable</p>
-      <p class="empty-title" v-if="videoInfo[0].error">
-        Error: {{ videoInfo[0].error }}
+      <p class="empty-title" v-if="videoInfo.error">
+        Error: {{ videoInfo.error }}
       </p>
       <div class="empty-action">
         <button class="btn" @click="goBack()">Go back</button>
@@ -15,21 +15,21 @@
   </div>
   <vue-plyr ref="plyr" v-else>
     <video
-      :data-poster="videoInfo[0].thumb"
+      :data-poster="videoInfo.thumb"
       playsinline
       controls
-      :src="videoInfo[0].formatStreams[0].url"
+      :src="videoInfo.formatStreams[0].url"
       width="100%"
     >
       <source
-        v-for="source in videoInfo[0].formatStreams"
+        v-for="source in videoInfo.formatStreams"
         :key="source.itag"
         :src="source.url"
         :type="source.type"
         :size="source.qualityLabel"
       />
       <!-- <track
-        v-for="caption in videoInfo[0].captions"
+        v-for="caption in videoInfo.captions"
         :key="caption.language_code"
         kind="captions"
         :label="caption.label"
@@ -44,7 +44,7 @@
 export default {
   name: "videoplayer",
   props: {
-    videoInfo: Array,
+    videoInfo: Object,
   },
   methods: {
     goBack() {

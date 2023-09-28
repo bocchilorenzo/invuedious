@@ -79,7 +79,7 @@
 var numeral = require("numeral");
 import cardContainer from "../components/cardContainer.vue";
 import roundedCardContainer from "../components/roundedCardContainer.vue";
-import axios from "axios";
+
 export default {
   name: "searchPage",
   components: {
@@ -149,19 +149,21 @@ export default {
         this.query +
         "&page=" +
         this.page;
-      await axios({
-        url: url,
-        timeout: 10000,
+      await fetch(url, {
+        signal: AbortSignal.timeout(10000),
       })
+        .then((response) => {
+          return response.json();
+        })
         .then((response) => {
           if (!this.stop) {
             let tmpObj = {};
             let tmp = false;
-            for (let i = 0; i < response.data.length; i++) {
-              tmpObj = response.data[i];
-              tmpObj.formattedViews = numeral(
-                response.data[i].viewCount
-              ).format("0a");
+            for (let i = 0; i < response.length; i++) {
+              tmpObj = response[i];
+              tmpObj.formattedViews = numeral(response[i].viewCount).format(
+                "0a"
+              );
               if (
                 tmpObj.formattedViews.charAt(
                   tmpObj.formattedViews.length - 1
@@ -175,12 +177,12 @@ export default {
                 tmpObj.formattedViews = strtmp;
               }
               tmpObj.formattedViews += " views";
-              tmp = this.checkDouble(response.data[i].videoId, "video");
-              if (tmp == false && response.data[i].videoId) {
+              tmp = this.checkDouble(response[i].videoId, "video");
+              if (tmp == false && response[i].videoId) {
                 this.dataArray.push(tmpObj);
               }
             }
-            if (response.data.length < 19) {
+            if (response.length < 19) {
               this.stop = true;
             }
           }
@@ -196,26 +198,26 @@ export default {
           }
         });
     },
-    getChannelsData() {
+    async getChannelsData() {
       var url =
         this.$store.state.selected +
         "/api/v1/search?q=" +
         this.query +
         "&type=channel&page=" +
         this.page;
-      axios({
-        url: url,
-        timeout: 10000,
+      await fetch(url, {
+        signal: AbortSignal.timeout(10000),
       })
+        .then((response) => {
+          return response.json();
+        })
         .then((response) => {
           if (!this.stop) {
             let tmpObj = {};
             let tmp = false;
-            for (let i = 0; i < response.data.length; i++) {
-              tmpObj = response.data[i];
-              tmpObj.formattedSubs = numeral(response.data[i].subCount).format(
-                "0a"
-              );
+            for (let i = 0; i < response.length; i++) {
+              tmpObj = response[i];
+              tmpObj.formattedSubs = numeral(response[i].subCount).format("0a");
               if (
                 tmpObj.formattedSubs.charAt(tmpObj.formattedSubs.length - 1) ==
                 "m"
@@ -227,12 +229,12 @@ export default {
                   ) + "M";
                 tmpObj.formattedSubs = strtmp;
               }
-              tmp = this.checkDouble(response.data[i].authorId, "channel");
+              tmp = this.checkDouble(response[i].authorId, "channel");
               if (tmp == false) {
                 this.dataArray.push(tmpObj);
               }
             }
-            if (response.data.length < 20) {
+            if (response.length < 20) {
               this.stop = true;
             }
           }

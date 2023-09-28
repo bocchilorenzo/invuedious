@@ -4,7 +4,7 @@
     <div class="columns">
       <div
         class="column col-xs-12 col-sm-6 col-md-4 col-lg-3 col-12"
-        v-for="video in videoInfo[0].recommendedVideos"
+        v-for="video in videoInfo.recommendedVideos"
         :key="video.videoId"
       >
         <card :video="video" :mode="'recommended'" />
@@ -18,7 +18,7 @@ import card from "./card.vue";
 export default {
   name: "recommended",
   props: {
-    videoInfo: Array,
+    videoInfo: Object,
   },
   components: {
     card,

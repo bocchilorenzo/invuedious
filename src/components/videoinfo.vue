@@ -1,49 +1,49 @@
 <template>
   <div>
     <h4 id="videoTitle">
-      <b>{{ videoInfo[0].title }}</b>
+      <b>{{ videoInfo.title }}</b>
     </h4>
     <div>
       <div id="infoMain">
         <router-link
           :to="{
             name: 'channel',
-            params: { id: videoInfo[0].authorId },
+            params: { id: videoInfo.authorId },
           }"
         >
           <div class="authorInfo">
             <figure
               class="avatar avatar-xl"
-              :data-initial="videoInfo[0].author.charAt(0)"
+              :data-initial="videoInfo.author.charAt(0)"
               style="background-color: #6f2232"
             >
               <img
-                :src="videoInfo[0].authorThumbnails[1].url"
+                :src="videoInfo.authorThumbnails[1].url"
                 name="Channel image"
               />
             </figure>
             <span class="authorDetails">
-              <span id="authorName">{{ videoInfo[0].author }}</span>
-              <span>{{ videoInfo[0].subCountText }} subscribers</span>
+              <span id="authorName">{{ videoInfo.author }}</span>
+              <span>{{ videoInfo.subCountText }} subscribers</span>
             </span>
           </div>
         </router-link>
         <div id="voteContainer">
           <p class="vote">
             <unicon name="thumbs-up" fill="var(--primary)" />
-            <span>{{ videoInfo[0].likeCount }}</span>
+            <span>{{ videoInfo.likeCount }}</span>
           </p>
           <!-- <p class="vote">
 					<unicon name="thumbs-down" fill="var(--primary)" />
-					<span>{{ videoInfo[0].dislikeCount }}</span>
+					<span>{{ videoInfo.dislikeCount }}</span>
 				</p> -->
         </div>
       </div>
       <div class="accordion">
         <div class="infoLeft">
-          <p>{{ numberWithDots(videoInfo[0].viewCount) }} views</p>
+          <p>{{ numberWithDots(videoInfo.viewCount) }} views</p>
           <span class="dot">•</span>
-          <p>{{ videoInfo[0].publishedText }}</p>
+          <p>{{ videoInfo.publishedText }}</p>
         </div>
         <input
           type="checkbox"
@@ -61,7 +61,7 @@
           <unicon name="angle-up" fill="white" v-else />
         </label>
         <div
-          v-html="videoInfo[0].descriptionHtml"
+          v-html="videoInfo.descriptionHtml"
           class="accordion-body"
           style="white-space: pre-wrap"
         ></div>
@@ -74,7 +74,7 @@
 export default {
   name: "videoinfo",
   props: {
-    videoInfo: Array,
+    videoInfo: Object,
   },
   data() {
     return {
