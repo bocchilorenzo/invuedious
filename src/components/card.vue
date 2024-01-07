@@ -10,7 +10,7 @@
 			<div class="card-image" style="position: relative">
 				<img
 					:src="video.videoThumbnails[4].url"
-					class="img-responsive"
+					class="img-responsive videoThumbnail"
 				/>
 				<span class="videoDuration">{{
 					secondsToTime(video.lengthSeconds)
@@ -89,6 +89,11 @@ img{
 .card-image img {
 	width: 100%;
 }
+
+.videoThumbnail {
+  aspect-ratio: 16 / 9;
+}
+
 .videoDuration {
 	position: absolute;
 	right: 0;
